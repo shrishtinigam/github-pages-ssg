@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} · {{ site_title }}{% endblock %}
+
+{% block content %}
+
+<article class="project container">
+    <!-- Project Header -->
+    <div class="project-meta" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+        {% if project.project_type %}
+        <span class="muted"><strong>{{ project.project_type }}</strong></span>
+        {% endif %}
+
+        {% if project.duration %}
+        <span class="muted"><em>{{ project.duration }}</em></span>
+        {% endif %}
+    </div>
+
+    <!-- Duration & Skills -->
+    <div class="project-meta">
+        {% if project.skills %}
+        <p><em>{{ project.skills }}</em> </p>
+        {% endif %}
+    </div>
+
+    <!-- Project Description -->
+    <div class="project-body">
+        {{ project.description_html | safe }}
+    </div>
+
+    <!-- Links -->
+    {% if project.link %}
+    <p class="project-link">
+        <a href="{{ project.link }}" target="_blank">View Project →</a>
+    </p>
+    {% endif %}
+
+    <!-- Back link -->
+    <p class="back-link">
+        <a href="{{ base_url or '/index.html' }}">← Back to Home</a>
+    </p>
+</article>
+
+{% endblock %}

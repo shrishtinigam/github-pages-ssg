@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ description }}">
+  <title>{% block title %}{{ site_title }}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ base_url ~ '/static/css/style.css' if base_url else '/static/css/style.css' }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('mobile-nav');
+      nav.classList.toggle('open');
+    }
+  </script>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="{{ base_url or '/index.html' }}" class="brand">{{ site_title }}</a>
+      <nav class="site-nav desktop-nav">
+        <a href="{{ base_url or '/index.html' }}">Home</a>
+        <a href="{{ base_url or '/index.html#about' }}">About</a>
+        <a href="{{ base_url or '/index.html#projects' }}">Projects</a>
+        <a href="{{ base_url or '/index.html#posts' }}">Posts</a>
+      </nav>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <nav id="mobile-nav" class="site-nav mobile-nav">
+      <a href="{{ base_url or '/index.html' }}" onclick="toggleMenu()">Home</a>
+      <a href="{{ base_url or '/index.html#about' }}" onclick="toggleMenu()">About</a>
+      <a href="{{ base_url or '/index.html#projects' }}" onclick="toggleMenu()">Projects</a>
+      <a href="{{ base_url or '/index.html#posts' }}" onclick="toggleMenu()">Posts</a>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; {{ author }} — Powered by SSG (Python + Jinja)</p>
+    </div>
+  </footer>
+</body>
+
+</html>

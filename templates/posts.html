@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Posts — {{ site_title }}{% endblock %}
+
+{% block content %}
+<section class="posts container">
+    <h2 class="section-heading">Blog Posts</h2>
+    <div class="post-list">
+        {% if posts|length == 0 %}
+        <p>No posts yet.</p>
+        {% else %}
+        {% for post in posts %}
+        <article class="post-card">
+            <h3><a href="{{ base_url }}/posts/{{ post.slug }}/">{{ post.title }}</a></h3>
+            {% if post.summary_html %}<p>{{ post.summary_html | safe }}</p>{% endif %}
+        </article>
+        {% endfor %}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

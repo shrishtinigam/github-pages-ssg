@@ -1,0 +1,385 @@
+/* Section Headings Centered */
+.section-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-accent);
+}
+
+/* Justified text for content */
+.about-text,
+.project-card p,
+.post-card p {
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+
+/* Ensure container stays centered and responsive */
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  /* center container */
+  padding: 1rem 0;
+}
+
+
+/* Section Headings Centered */
+.section-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-accent);
+}
+
+/* Justified text for content */
+.about-text,
+.project-card p,
+.post-card p {
+  text-align: justify;
+}
+
+/* Ensure container stays centered and responsive */
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  /* center container */
+  padding: 1rem 0;
+}
+
+/* Optional: Projects and posts can still display in grid */
+.project-list,
+.post-list {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 1.5rem;
+}
+
+
+/* =========================
+   Base Colors & Fonts
+========================= */
+:root {
+  --color-bg: #000000;
+  /* black background */
+  --color-text: #f8f8f8;
+  /* light text */
+  --color-accent: #ff69b4;
+  /* hot pink */
+  --color-muted: #aaa;
+  /* less important text */
+  --color-link: #ff69b4;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   Containers
+========================= */
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+/* =========================
+   Header & Navigation
+========================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  z-index: 1000;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header .brand {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--color-accent);
+}
+
+.site-nav a {
+  margin-left: 1.5rem;
+  font-weight: 600;
+}
+
+/* Desktop vs Mobile Nav */
+.desktop-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-accent);
+}
+
+.mobile-nav.open {
+  display: flex;
+}
+
+.mobile-nav a {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-accent);
+}
+
+@media screen and (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* =========================
+   Hero Section
+========================= */
+.hero {
+  padding: 4rem 1rem;
+  text-align: center;
+  /* center everything inside hero */
+}
+
+.hero .section-heading {
+  font-size: 2.5rem;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.hero .hero-description {
+  font-size: 1.2rem;
+  color: var(--color-text);
+  max-width: 700px;
+  margin: 0 auto;
+  /* center paragraph */
+  text-align: center;
+  /* justify text but keep centered block */
+}
+
+
+/* =========================
+   About Section
+========================= */
+.about {
+  padding: 3rem 1rem;
+  text-align: justify;
+}
+
+.about-text p {
+  text-align: justify;
+  /* Justify all paragraphs */
+  margin-bottom: 1rem;
+  /* Add spacing between paragraphs */
+}
+
+.about p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: var(--color-text);
+}
+
+/* =========================
+   Projects Section
+========================= */
+.projects {
+  padding: 3rem 1rem;
+}
+
+.project-list {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 1.5rem;
+}
+
+.project-card {
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+.project-card h3 {
+  color: var(--color-accent);
+}
+
+.project-card p {
+  color: var(--color-text);
+}
+
+.project-card a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* =========================
+   Posts Section
+========================= */
+.post-list {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 1.5rem;
+}
+
+.post-card {
+  padding: 1rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-3px);
+}
+
+.post-card h2,
+.post-card h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.post-card .muted {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.read-more {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Single post page */
+.post h1 {
+  color: var(--color-accent);
+  margin-top: 0;
+}
+
+.post .muted {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.post-body {
+  margin-top: 1rem;
+}
+
+.back-link a {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* =========================
+   Footer
+========================= */
+.site-footer {
+  margin-top: 3rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-accent);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* =========================
+   Single Post Page
+========================= */
+.post {
+  padding: 2rem 1rem;
+}
+
+.post-header h1 {
+  font-size: 2rem;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.post-header .muted {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.post-body {
+  margin-top: 1.5rem;
+  line-height: 1.7;
+}
+
+/* Markdown code blocks */
+.post-body pre {
+  background-color: #111;
+  color: var(--color-text);
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.post-body code {
+  background-color: #111;
+  color: var(--color-accent);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+}
+
+/* Links inside post */
+.post-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.back-link {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.back-link a {
+  font-weight: 600;
+  color: var(--color-accent);
+}

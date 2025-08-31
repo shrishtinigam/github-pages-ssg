@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}About — {{ site_title }}{% endblock %}
+
+{% block content %}
+<section class="about container">
+    <h2 class="section-heading">About Me</h2>
+    <div class="about-text">
+        {{ about_html | safe }}
+    </div>
+</section>
+{% endblock %}

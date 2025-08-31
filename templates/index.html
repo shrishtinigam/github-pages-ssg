@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}{{ site_title }}{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero container">
+  <h1 class="section-heading">Hello, I'm {{ author }}.</h1>
+  <p class="hero-description">{{ description }}</p>
+</section>
+
+<!-- About Section -->
+<section id="about" class="container about">
+  <h2 class="section-heading">About Me</h2>
+  <div class="about-text">
+    {{ about_html | safe }}
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="container projects">
+  <h2 class="section-heading">Projects</h2>
+  <div class="project-list">
+    {% if projects|length == 0 %}
+    <p>No projects yet. Add some to your database and rebuild.</p>
+    {% else %}
+    {% for project in projects %}
+    <article class="project-card">
+      <h3>
+        <a
+          href="{{ (base_url ~ '/projects/' ~ project.slug ~ '/index.html') if base_url else ('/projects/' ~ project.slug ~ '/index.html') }}">
+          {{ project.title }}
+        </a>
+      </h3>
+      {% if project.project_type and project.duration %}
+      <p class="muted"><strong>{{ project.project_type }}</strong> - <em>{{ project.duration }}</em></p>
+      {% endif %}
+      {% if project.skills %}<p class="muted"><em>{{ project.skills }}</em></p>{% endif %}
+      {% if project.summary %}<p>{{ project.summary }}</p>{% endif %}
+      <a class="read-more" href="{{ project.link or (base_url ~ '/projects/' ~ project.slug ~ '/index.html') }}">
+        {{ 'View Project →' if project.link else 'View Details →' }}
+      </a>
+    </article>
+    {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+<!-- Latest Posts Section -->
+<section id="posts" class="container posts">
+  <h2 class="section-heading">Latest Blog Posts</h2>
+  <div class="post-list">
+    {% if posts|length == 0 %}
+    <p>No posts yet.</p>
+    {% else %}
+    {% for p in posts %}
+    <article class="post-card">
+      <h3>
+        <a
+          href="{{ (base_url ~ '/posts/' ~ p.slug ~ '/index.html') if base_url else ('/posts/' ~ p.slug ~ '/index.html') }}">
+          {{ p.title }}
+        </a>
+      </h3>
+      {% if p.created_at %}<p class="muted">{{ p.created_at }}</p>{% endif %}
+      {% if p.summary_html %}<p>{{ p.summary_html | safe }}</p>{% endif %}
+      <a class="read-more"
+        href="{{ (base_url ~ '/posts/' ~ p.slug ~ '/index.html') if base_url else ('/posts/' ~ p.slug ~ '/index.html') }}">
+        Read →
+      </a>
+    </article>
+    {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
