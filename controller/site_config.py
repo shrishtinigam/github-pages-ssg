@@ -6,13 +6,13 @@ DESCRIPTION = "Performance, Projects, Perspective"
 AUTHOR = "Meher Shrishti Nigam"
 
 # Root folder of the repo (project root)
-ROOT = Path(__file__).parent.resolve()
+ROOT = Path(__file__).parent.parent.resolve()
 
 # Content folders
 CONTENT_DIR = ROOT / "content"             # Root content folder
 POSTS_DIR = CONTENT_DIR / "posts"          # Individual blog posts
 PROJECTS_DIR = CONTENT_DIR / "projects"    # Individual project files
-SCHEMA_PATH = ROOT / "schemas"
+SCHEMA_PATH = ROOT / "model"
 DB_PATH =  ROOT / "data"
 OUTPUT_DIR = ROOT / "root"
 STATIC_DIR = ROOT / "static"

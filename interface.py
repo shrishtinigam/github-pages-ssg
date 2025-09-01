@@ -55,7 +55,7 @@ import sys
 import argparse
 from entities.posts import add_new_posts, rewrite_all_posts, delete_post as delete_post_slug
 from entities.projects import add_new_projects, rewrite_all_projects, delete_project as delete_project_slug
-from init_db import instantiate_tables
+from db_utils.init_db import instantiate_tables
 
 class ContentManager:
     """Interface to manage posts and projects in one place."""

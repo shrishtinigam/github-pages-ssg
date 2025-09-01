@@ -1,5 +1,4 @@
 # init_db.py
-from pathlib import Path
 from db_utils.posts import create_tables as create_post_tables
 from db_utils.projects import create_tables as create_project_tables
 
