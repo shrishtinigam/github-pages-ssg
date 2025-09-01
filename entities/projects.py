@@ -1,8 +1,7 @@
 from pathlib import Path
 import re
-
-from site_config import ROOT, PROJECTS_DIR
-from db_utils.projects import create_tables, insert_project, archive_project, project_exists
+from site_config import PROJECTS_DIR
+from db_utils.projects import insert_project, archive_project, project_exists, archive_project
 
 # ---------- Helpers ----------
 def slugify(filename: str) -> str:
@@ -63,3 +62,16 @@ def rewrite_all_projects():
             archive_project(slug)
         print(f"[INSERT] Adding project: {slug}")
         insert_project(slug, title, project_type, summary, duration, skills, description_md)
+
+
+
+def delete_project(slug: str) -> None:
+    """
+    Move a project to deleted_projects and remove it from projects.
+    """
+    if not project_exists(slug):
+        print(f"❌ No project found with slug '{slug}'")
+        return
+
+    archive_project(slug)
+    print(f"🗑️ Project '{slug}' moved to deleted_projects.")

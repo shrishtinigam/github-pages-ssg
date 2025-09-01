@@ -4,7 +4,7 @@ from typing import Optional, Tuple, List
 from site_config import SCHEMA_PATH, DB_PATH
 
 # Database path
-DB_PATH = DB_PATH / "projects.db"
+DB_PATH = DB_PATH / "site.db"
 
 # ---------- Connection ----------
 def get_connection() -> sqlite3.Connection:

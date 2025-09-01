@@ -53,13 +53,8 @@ Notes:
 
 import sys
 import argparse
-from site_config import ROOT, CONTENT_DIR
-
-# Import posts and projects modules
-from posts.add import add_new_posts, rewrite_all_posts
-from posts.delete import delete_post as delete_post_slug
-from projects.add import add_new_projects, rewrite_all_projects
-from projects.delete import delete_project as delete_project_slug
+from entities.posts import add_new_posts, rewrite_all_posts, delete_post as delete_post_slug
+from entities.projects import add_new_projects, rewrite_all_projects, delete_project as delete_project_slug
 from init_db import instantiate_tables
 
 class ContentManager:

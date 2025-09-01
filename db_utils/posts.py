@@ -2,7 +2,8 @@ import sqlite3
 from typing import Optional, Tuple, List
 from datetime import datetime
 from site_config import SCHEMA_PATH, DB_PATH
-DB_PATH = DB_PATH / "blog.db"
+
+DB_PATH = DB_PATH / "site.db"
 
 # ---------- Connection ----------
 def get_connection() -> sqlite3.Connection:

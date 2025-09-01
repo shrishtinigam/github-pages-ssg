@@ -5,7 +5,7 @@ from db_utils.projects import create_tables as create_project_tables
 
 from site_config import ROOT
 
-DB_PATH = ROOT / "data" / "blog.db"
+DB_PATH = ROOT / "data" / "site.db"
 
 def ensure_data_dir() -> None:
     """Ensure the data directory exists."""

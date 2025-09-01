@@ -1,6 +1,6 @@
 from site_config import POSTS_DIR
 from pathlib import Path
-from db_utils.posts import create_tables, insert_post, archive_post, post_exists
+from db_utils.posts import insert_post, archive_post, post_exists
 import re
 
 def slugify(filename: str) -> str:
@@ -59,4 +59,13 @@ def rewrite_all_posts():
         print(f"[INSERT] Adding post: {slug}")
         insert_post(slug, title, body_md, summary)
 
+
+def delete_post(slug: str) -> None:
+    """Move a post to deleted_posts and remove it from posts."""
+    if not post_exists(slug):
+        print(f"❌ No post found with slug '{slug}'")
+        return
+
+    archive_post(slug)
+    print(f"🗑️ Post '{slug}' moved to deleted_posts.")
 
