@@ -14,6 +14,6 @@ POSTS_DIR = CONTENT_DIR / "posts"          # Individual blog posts
 PROJECTS_DIR = CONTENT_DIR / "projects"    # Individual project files
 SCHEMA_PATH = ROOT / "model"
 DB_PATH =  ROOT / "data"
-OUTPUT_DIR = ROOT / "root"
+OUTPUT_DIR = 'C:/Users/meher/Projects/website-push/'
 STATIC_DIR = ROOT / "static"
 TEMPLATES_DIR = ROOT / "templates"
