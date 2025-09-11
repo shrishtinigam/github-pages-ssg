@@ -1,14 +1,16 @@
 import sqlite3
 from typing import Optional, Tuple, List
 from datetime import datetime
-from site_config import SCHEMA_PATH, DB_PATH
+from static_portfolio_generator.controller.site_config import SCHEMA_PATH, DB_PATH
 
 DB_PATH = DB_PATH / "site.db"
+
 
 # ---------- Connection ----------
 def get_connection() -> sqlite3.Connection:
     """Return a new SQLite connection."""
     return sqlite3.connect(DB_PATH)
+
 
 # ---------- Create Tables ----------
 def create_tables() -> None:
@@ -18,8 +20,11 @@ def create_tables() -> None:
         con.executescript(schema_path.read_text(encoding="utf-8"))
         con.commit()
 
+
 # ---------- Insert ----------
-def insert_post(slug: str, title: str, body_md: str, summary: Optional[str] = None) -> None:
+def insert_post(
+    slug: str, title: str, body_md: str, summary: Optional[str] = None
+) -> None:
     """Insert a new post into the posts table."""
     try:
         with get_connection() as con:
@@ -36,7 +41,10 @@ def insert_post(slug: str, title: str, body_md: str, summary: Optional[str] = No
     except Exception as e:
         print(f"❌ Error inserting post '{slug}': {e}")
 
-def update_post(slug: str, title: str, body_md: str, summary: Optional[str] = None) -> None:
+
+def update_post(
+    slug: str, title: str, body_md: str, summary: Optional[str] = None
+) -> None:
     """Update an existing post by slug."""
     try:
         with get_connection() as con:
@@ -52,6 +60,7 @@ def update_post(slug: str, title: str, body_md: str, summary: Optional[str] = No
     except Exception as e:
         print(f"❌ Error updating post '{slug}': {e}")
 
+
 # ---------- Archive ----------
 def archive_post(slug: str, deleted_at: Optional[str] = None) -> None:
     """
@@ -62,7 +71,7 @@ def archive_post(slug: str, deleted_at: Optional[str] = None) -> None:
     if deleted_at is None:
         # Use SQLite-compatible timestamp
         deleted_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
+
     try:
         with get_connection() as con:
             con.execute(

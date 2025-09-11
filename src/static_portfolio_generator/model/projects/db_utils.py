@@ -1,15 +1,17 @@
 import sqlite3
 from datetime import datetime, timezone
 from typing import Optional, Tuple, List
-from site_config import SCHEMA_PATH, DB_PATH
+from static_portfolio_generator.controller.site_config import SCHEMA_PATH, DB_PATH
 
 # Database path
 DB_PATH = DB_PATH / "site.db"
+
 
 # ---------- Connection ----------
 def get_connection() -> sqlite3.Connection:
     """Return a new SQLite connection."""
     return sqlite3.connect(DB_PATH)
+
 
 # ---------- Create Tables ----------
 def create_tables() -> None:
@@ -20,15 +22,16 @@ def create_tables() -> None:
         con.executescript(schema_path.read_text(encoding="utf-8"))
         con.commit()
 
+
 # ---------- Insert ----------
 def insert_project(
-    slug: str, 
-    title: str, 
+    slug: str,
+    title: str,
     project_type: str = "Personal Project",
     summary: Optional[str] = None,
     duration: Optional[str] = None,
     skills: Optional[str] = None,
-    description_md: str = ""
+    description_md: str = "",
 ) -> None:
     """Insert a new project into the projects table."""
     try:
@@ -44,6 +47,7 @@ def insert_project(
     except sqlite3.IntegrityError:
         print(f"❌ Project with slug '{slug}' already exists.")
 
+
 # ---------- Update ----------
 def update_project(
     slug: str,
@@ -52,7 +56,7 @@ def update_project(
     summary: Optional[str] = None,
     duration: Optional[str] = None,
     skills: Optional[str] = None,
-    description_md: str = ""
+    description_md: str = "",
 ) -> None:
     """Update an existing project by slug."""
     with get_connection() as con:
@@ -65,6 +69,7 @@ def update_project(
             (title, project_type, summary, duration, skills, description_md, slug),
         )
         con.commit()
+
 
 # ---------- Archive ----------
 def archive_project(slug: str, deleted_at: Optional[str] = None) -> None:
@@ -88,6 +93,7 @@ def archive_project(slug: str, deleted_at: Optional[str] = None) -> None:
         con.execute("DELETE FROM projects WHERE slug = ?", (slug,))
         con.commit()
 
+
 # ---------- Select ----------
 def project_exists(slug: str) -> bool:
     """Check if a project exists by slug."""
@@ -95,11 +101,13 @@ def project_exists(slug: str) -> bool:
         cur = con.execute("SELECT 1 FROM projects WHERE slug = ?", (slug,))
         return cur.fetchone() is not None
 
+
 def fetch_project(slug: str) -> Optional[Tuple]:
     """Fetch a single project by slug."""
     with get_connection() as con:
         cur = con.execute("SELECT * FROM projects WHERE slug = ?", (slug,))
         return cur.fetchone()
+
 
 def fetch_all_projects() -> List[Tuple]:
     """Fetch all projects ordered by creation date descending."""

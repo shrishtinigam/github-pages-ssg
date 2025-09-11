@@ -1,13 +1,18 @@
-from site_config import POSTS_DIR
+from static_portfolio_generator.controller.site_config import POSTS_DIR
 from pathlib import Path
-from db_utils.posts import insert_post, archive_post, post_exists
+from static_portfolio_generator.model.posts.db_utils import (
+    insert_post,
+    archive_post,
+    post_exists,
+)
 import re
+
 
 def slugify(filename: str) -> str:
     s = Path(filename).stem.lower()
-    s = re.sub(r'[^a-z0-9-]', '-', s)
-    s = re.sub(r'-+', '-', s)
-    return s.strip('-')
+    s = re.sub(r"[^a-z0-9-]", "-", s)
+    s = re.sub(r"-+", "-", s)
+    return s.strip("-")
 
 
 def parse_markdown(file_path):
@@ -68,4 +73,3 @@ def delete_post(slug: str) -> None:
 
     archive_post(slug)
     print(f"🗑️ Post '{slug}' moved to deleted_posts.")
-
