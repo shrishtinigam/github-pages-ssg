@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "static_portfolio_generator"
+version = "0.0.1"
+description = "Static site portfolio generator"
+authors = [
+    { name = "Meher Shrishti Nigam" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "Jinja2==3.1.4",
+    "Markdown==3.6"
+]
+
+[project.scripts]
+spg = "static_portfolio_generator.cli:spg"

@@ -77,7 +77,8 @@ from static_portfolio_generator.controller.builder import SiteBuilder
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Unified CLI to manage posts, projects, experiences, and build site"
+        prog="spg",
+        description="Unified CLI to manage posts, projects, experiences, and build site",
     )
 
     parser.add_argument(

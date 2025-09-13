@@ -55,7 +55,7 @@ class SiteBuilder:
         self.static_dir: Path = Path(STATIC_DIR)
         self.content_dir: Path = Path(CONTENT_DIR)
         self.env: Environment = self._get_env()
-        
+
     # ------------------ Public API ------------------ #
     def build(self):
         """Main entry point to build the static site."""
@@ -103,7 +103,7 @@ class SiteBuilder:
     def _parse_datetime(dt_str: str) -> str:
         """
         Convert datetime string to human-readable format.
-        
+
         :param dt_str: Datetime string from the database.
         :return: Formatted date string like 'Jan 01, 2023' or empty string if input is empty.
         """
@@ -234,7 +234,7 @@ class SiteBuilder:
     def _build_index(self, posts, projects, about_summary_html):
         """
         Build the index.html page with posts, projects, and about summary.
-        
+
         :param posts: List of post dictionaries.
         :param projects: List of project dictionaries.
         :param about_summary_html: HTML string for the about summary.
