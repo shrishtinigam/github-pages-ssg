@@ -1,19 +1,44 @@
-# init_db.py
-from posts.posts import create_tables as create_post_tables
-from posts.projects import create_tables as create_project_tables
+"""
+init_db
+=======
 
-from site_config import ROOT
+Initialize the database for the static portfolio generator.
 
-DB_PATH = ROOT / "data" / "site.db"
+Features
+--------
+
+- Ensure the data directory exists.
+- Create all tables for posts and projects.
+- Sets up SQLite database at the configured path.
+"""
+
+from static_portfolio_generator.model.posts.db_utils import (
+    create_tables as create_post_tables,
+)
+from static_portfolio_generator.model.projects.db_utils import (
+    create_tables as create_project_tables,
+)
+from static_portfolio_generator.controller.config import DB_PATH
 
 
 def ensure_data_dir() -> None:
-    """Ensure the data directory exists."""
+    """
+    Ensure that the data directory exists.
+
+    Creates the directory tree for the database if it does not exist.
+    """
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def instantiate_tables() -> None:
-    """Initialize the database: ensure data folder and all tables exist."""
+    """
+    Initialize the database tables for posts and projects.
+
+    This will:
+    1. Ensure the data directory exists.
+    2. Create tables for posts.
+    3. Create tables for projects.
+    """
     ensure_data_dir()
 
     # Create posts tables

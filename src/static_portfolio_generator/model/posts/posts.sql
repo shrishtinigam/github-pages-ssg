@@ -1,11 +1,11 @@
--- SQLite schema for blog posts
+-- Blog posts
 CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     slug TEXT UNIQUE NOT NULL,
     title TEXT NOT NULL,
     summary TEXT,
     body_md TEXT NOT NULL,
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at TEXT NOT NULL DEFAULT (strftime('{{datetime_format}}','now','utc')),
     updated_at TEXT
 );
 
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS deleted_posts (
     title TEXT,
     summary TEXT,
     body_md TEXT,
-    created_at TEXT,
+    created_at TEXT DEFAULT (strftime('{{datetime_format}}','now','utc')),
     updated_at TEXT,
-    deleted_at TEXT DEFAULT (datetime('now'))
+    deleted_at TEXT DEFAULT (strftime('{{datetime_format}}','now','utc'))
 );

@@ -71,10 +71,8 @@ Notes:
 
 import argparse
 
-from contentservice import (
-    ContentService,
-)  # Handles DB operations for posts/projects/experiences
-from site_builder import SiteBuilder  # Handles static site generation
+from static_portfolio_generator.controller.content import ContentGenerator
+from static_portfolio_generator.controller.builder import SiteBuilder
 
 
 def main():
@@ -115,37 +113,38 @@ def main():
     parser.add_argument("--build", action="store_true", help="Build the static site")
 
     args = parser.parse_args()
-    content_service = ContentService()
+    content_generator = ContentGenerator()
     site_builder = SiteBuilder()
 
     # Database init
     if args.init_db:
-        content_service.init_db()
+        content_generator.init_db()
 
     # Posts operations
     if args.add_posts:
-        content_service.add_posts()
+        content_generator.add_posts_to_db()
     if args.rewrite_posts:
-        content_service.add_posts(hard=True)
+        content_generator.add_posts_to_db(hard=True)
     if args.delete_post:
-        content_service.delete_post(args.delete_post)
+        content_generator.delete_post_from_db(args.delete_post)
 
     # Projects operations
     if args.add_projects:
-        content_service.add_projects()
+        content_generator.add_projects_to_db()
     if args.rewrite_projects:
-        content_service.add_projects(hard=True)
+        content_generator.add_projects_to_db(hard=True)
     if args.delete_project:
-        content_service.delete_project(args.delete_project)
+        content_generator.delete_project_from_db(args.delete_project)
 
+    """
     # Experiences operations
     if args.add_experiences:
-        content_service.add_experiences()
+        content_generator.add_experiences()
     if args.rewrite_experiences:
-        content_service.add_experiences(hard=True)
+        content_generator.add_experiences(hard=True)
     if args.delete_experience:
-        content_service.delete_experience(args.delete_experience)
-
+        content_generator.delete_experience(args.delete_experience)
+    """
     # Build static site
     if args.build:
         site_builder.build()

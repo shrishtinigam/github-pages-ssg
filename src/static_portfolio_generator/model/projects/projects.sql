@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS projects (
     duration TEXT,
     skills TEXT,
     description_md TEXT NOT NULL,
-    created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S','now','utc')),
+    created_at TEXT NOT NULL DEFAULT (strftime('{{datetime_format}}','now','utc')),
     updated_at TEXT
 );
 
@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS deleted_projects (
     duration TEXT,
     skills TEXT,
     description_md TEXT,
-    created_at TEXT,
+    created_at TEXT DEFAULT (strftime('{{datetime_format}}','now','utc')),
     updated_at TEXT,
-    deleted_at TEXT DEFAULT (strftime('%Y-%m-%d %H:%M:%S','now','utc'))
+    deleted_at TEXT DEFAULT (strftime('{{datetime_format}}','now','utc'))
 );
+

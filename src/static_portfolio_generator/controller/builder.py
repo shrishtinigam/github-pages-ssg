@@ -1,15 +1,6 @@
 """
-site_builder.py — Object-Oriented Static Site Generator
-
 This class-based implementation provides a unified interface to build the static site
 from posts, projects, and about content stored in the database and markdown files.
-
-Usage:
-------
-from site_builder import SiteBuilder
-
-builder = SiteBuilder()
-builder.build()
 """
 
 import shutil
@@ -19,7 +10,7 @@ from pathlib import Path
 import markdown
 from jinja2 import Environment, FileSystemLoader, select_autoescape, TemplateNotFound
 
-from github_pages.controller.site_config import (
+from static_portfolio_generator.controller.config import (
     SITE_TITLE,
     BASE_URL,
     DESCRIPTION,
@@ -29,20 +20,42 @@ from github_pages.controller.site_config import (
     STATIC_DIR,
     CONTENT_DIR,
 )
-from db_utils.posts import fetch_all_posts
-from db_utils.projects import fetch_all_projects
+from static_portfolio_generator.model.posts.db_utils import fetch_all_posts
+from static_portfolio_generator.model.projects.db_utils import fetch_all_projects
 
 
 class SiteBuilder:
-    """Object-oriented static site generator."""
+    """
+    Builds a static site from entities and generic content.
+
+    Features
+    --------
+    - Loads posts and projects from the database.
+    - Reads about content from markdown files.
+    - Converts markdown to HTML.
+    - Uses Jinja2 templates to render pages.
+
+    Attributes
+    ----------
+    output_dir : Path
+        Directory to output the static site.
+    templates_dir : Path
+        Directory containing Jinja2 templates.
+    static_dir : Path
+        Directory containing static assets (CSS, JS, images).
+    content_dir : Path
+        Directory containing markdown content files.
+    env : Environment
+        Jinja2 environment for template rendering.
+    """
 
     def __init__(self):
-        self.output_dir: Path = OUTPUT_DIR
-        self.templates_dir: Path = TEMPLATES_DIR
-        self.static_dir: Path = STATIC_DIR
-        self.content_dir: Path = CONTENT_DIR
+        self.output_dir: Path = Path(OUTPUT_DIR)
+        self.templates_dir: Path = Path(TEMPLATES_DIR)
+        self.static_dir: Path = Path(STATIC_DIR)
+        self.content_dir: Path = Path(CONTENT_DIR)
         self.env: Environment = self._get_env()
-
+        
     # ------------------ Public API ------------------ #
     def build(self):
         """Main entry point to build the static site."""
@@ -62,7 +75,7 @@ class SiteBuilder:
         self._build_individual_project_pages(projects)
 
         print(
-            f"✅ Built {len(posts)} posts and {len(projects)} projects into: {self.output_dir}"
+            f"Built {len(posts)} posts and {len(projects)} projects into: {self.output_dir}"
         )
 
     # ------------------ Private Helpers ------------------ #
@@ -88,7 +101,12 @@ class SiteBuilder:
 
     @staticmethod
     def _parse_datetime(dt_str: str) -> str:
-        """Convert datetime string to human-readable format."""
+        """
+        Convert datetime string to human-readable format.
+        
+        :param dt_str: Datetime string from the database.
+        :return: Formatted date string like 'Jan 01, 2023' or empty string if input is empty.
+        """
         if not dt_str:
             return ""
         try:
@@ -98,7 +116,9 @@ class SiteBuilder:
         return dt.strftime("%b %d, %Y")
 
     def _load_posts(self):
-        """Fetch posts from DB and convert markdown to HTML."""
+        """
+        Fetch posts from DB and convert markdown to HTML.
+        """
         rows = fetch_all_posts()
         posts = []
         for r in rows:
@@ -125,7 +145,12 @@ class SiteBuilder:
 
     @staticmethod
     def _parse_end_date(duration: str) -> datetime:
-        """Return datetime object for the end of a duration string."""
+        """
+        Return datetime object for the end of a duration string.
+
+        :param duration: Duration string like "Jan 2020 - Dec 2021" or "Feb 2019 - Present"
+        :return: datetime object for the end date, or datetime.min if parsing fails.
+        """
         try:
             end_part = duration.split("-")[-1].strip()
             return datetime.strptime(end_part, "%b %Y")
@@ -133,7 +158,9 @@ class SiteBuilder:
             return datetime.min
 
     def _load_projects(self):
-        """Fetch projects from DB and convert markdown to HTML."""
+        """
+        Fetch projects from DB and convert markdown to HTML.
+        """
         rows = fetch_all_projects()
         projects = []
         for r in rows:
@@ -168,7 +195,9 @@ class SiteBuilder:
         return projects
 
     def _load_about_summary(self) -> str:
-        """Load about_summary.md and convert each line to HTML."""
+        """
+        Load about_summary.md and convert each line to HTML.
+        """
         about_file = self.content_dir / "about_summary.md"
         if not about_file.exists():
             return "<p>About me content not found.</p>"
@@ -182,7 +211,9 @@ class SiteBuilder:
         return "<br>".join(html_lines)
 
     def _load_about(self) -> str:
-        """Load about.md and convert markdown content to HTML."""
+        """
+        Load about.md and convert markdown content to HTML.
+        """
         about_file = self.content_dir / "about.md"
         if not about_file.exists():
             return "<p>About content not found.</p>"
@@ -190,7 +221,9 @@ class SiteBuilder:
 
     @staticmethod
     def _markdown_to_html(md_text: str) -> str:
-        """Convert markdown text to HTML."""
+        """
+        Convert markdown text to HTML.
+        """
         return markdown.markdown(
             md_text,
             extensions=["fenced_code", "tables", "codehilite", "toc"],
@@ -199,6 +232,13 @@ class SiteBuilder:
 
     # ------------------ Page Builders ------------------ #
     def _build_index(self, posts, projects, about_summary_html):
+        """
+        Build the index.html page with posts, projects, and about summary.
+        
+        :param posts: List of post dictionaries.
+        :param projects: List of project dictionaries.
+        :param about_summary_html: HTML string for the about summary.
+        """
         try:
             template = self.env.get_template("index.html")
             html = template.render(
