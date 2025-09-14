@@ -383,3 +383,65 @@ a:hover {
   font-weight: 600;
   color: var(--color-accent);
 }
+
+/* =========================
+   Timeline / Milestones
+========================= */
+/* =========================
+   Timeline / Milestones (Dark Theme Fix)
+========================= */
+.timeline-container {
+  position: relative;
+  width: 80%;
+  margin: 2rem auto;
+  padding: 2rem 0;
+}
+
+.timeline-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--color-accent); /* use accent instead of dull grey */
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.timeline-date {
+  width: 40%;
+  text-align: right;
+  padding-right: 20px;
+  font-weight: bold;
+  color: var(--color-muted); /* lighter grey for dates */
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  background: var(--color-accent); /* accent dot */
+  border-radius: 50%;
+  border: 3px solid var(--color-bg); /* ring matches background */
+  z-index: 1;
+}
+
+.timeline-content {
+  width: 40%;
+  padding-left: 20px;
+  background: var(--color-bg); /* dark background */
+  color: var(--color-text);    /* light text */
+  border: 1px solid var(--color-accent); /* accent border */
+  border-radius: 8px;
+  padding: 1rem;
+}
