@@ -57,7 +57,7 @@ class ContentGenerator:
 
         :param slug: The slug identifier of the post to delete.
         """
-        self.post.delete_post_slug(slug)
+        self.post.delete_post(slug)
 
     # -------- Projects ----------
     def add_projects_to_db(self, hard=False):

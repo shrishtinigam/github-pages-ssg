@@ -13,38 +13,38 @@ Usage:
 2. Posts Management:
 
     a) Add new posts from Markdown files (skip existing):
-        spg add-posts
+        spg --add-posts
 
     b) Rewrite all posts (archive existing and re-insert all Markdown files):
-        spg rewrite-posts
+        spg --rewrite-posts
 
     c) Delete a post by slug:
-        spg delete-post <slug>
+        spg --delete-post <slug>
 
 3. Projects Management:
 
     a) Add new projects from Markdown files (skip existing):
-        spg add-projects
+        spg --add-projects
 
     b) Rewrite all projects (archive existing and re-insert all Markdown files):
-        spg rewrite-projects
+        spg --rewrite-projects
 
     c) Delete a project by slug:
-        spg delete-project <slug>
+        spg --delete-project <slug>
 
 4. Experiences Management:
 
     a) Add new experiences from Markdown files (skip existing):
-        spg add-experiences
+        spg --add-experiences
 
     b) Rewrite all experiences (archive existing and re-insert all Markdown files):
-        spg rewrite-experiences
+        spg --rewrite-experiences
 
     c) Delete an experience by slug:
-        spg delete-experience <slug>
+        spg --delete-experience <slug>
 
 5. Build the static site:
-    spg build
+    spg --build
 
 Commands:
 ---------
