@@ -476,22 +476,6 @@ a:hover {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
 }
 
-.post-body blockquote::before {
-  content: open-quote;
-  font-size: 2.4rem;
-  line-height: 0;
-  vertical-align: -0.4em;
-  color: var(--color-accent);
-  margin-right: 0.3rem;
-}
-
-.post-body blockquote::after {
-  content: close-quote;
-  font-size: 2.4rem;
-  color: var(--color-accent);
-  margin-left: 0.3rem;
-}
-
 .post-body blockquote p {
   margin: 0.5rem 0;
 }
