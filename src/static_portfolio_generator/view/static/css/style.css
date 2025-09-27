@@ -454,45 +454,44 @@ a:hover {
 }
 
 /* =========================
-   Blockquotes
+   Fancy Blockquotes
 ========================= */
-blockquote {
+.post-body blockquote {
   font-style: italic;
-  /* Italicized for emphasis */
-  font-size: 1.1rem;
-  /* Slightly larger */
-  color: var(--color-text);
-  /* Light text */
-  background-color: #111;
-  /* Slightly darker than main bg */
-  border-left: 4px solid var(--color-accent);
-  /* Colored left border */
-  padding: 1rem 1.5rem;
-  /* Inner padding */
-  margin: 1.5rem 0;
-  /* Space around quote */
-  border-radius: 6px;
-  /* Rounded corners */
+  font-size: 1.15rem;
+  color: #f0f0f0;
+  background: linear-gradient(145deg, #111 0%, #1a1a1a 100%);
+  border-left: 6px solid var(--color-accent);
+  padding: 1.2rem 1.8rem;
+  margin: 2rem 0;
+  border-radius: 10px;
   position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
   quotes: "“" "”" "‘" "’";
-  /* Fancy quotation marks */
 }
 
-blockquote::before {
+.post-body blockquote:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+}
+
+.post-body blockquote::before {
   content: open-quote;
-  font-size: 2rem;
+  font-size: 2.4rem;
   line-height: 0;
-  margin-right: 0.25rem;
   vertical-align: -0.4em;
   color: var(--color-accent);
+  margin-right: 0.3rem;
 }
 
-blockquote::after {
+.post-body blockquote::after {
   content: close-quote;
+  font-size: 2.4rem;
   color: var(--color-accent);
+  margin-left: 0.3rem;
 }
 
-blockquote p {
-  margin: 0;
-  /* Remove extra spacing from paragraphs inside blockquote */
+.post-body blockquote p {
+  margin: 0.5rem 0;
 }
