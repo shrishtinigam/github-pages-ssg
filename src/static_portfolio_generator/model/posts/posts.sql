@@ -5,18 +5,13 @@ CREATE TABLE IF NOT EXISTS posts (
     title TEXT NOT NULL,
     summary TEXT,
     body_md TEXT NOT NULL,
-    created_at TEXT NOT NULL DEFAULT (strftime('{{datetime_format}}','now','utc')),
-    updated_at TEXT
-);
 
--- Deleted posts archive
-CREATE TABLE IF NOT EXISTS deleted_posts (
-    id INTEGER,
-    slug TEXT,
-    title TEXT,
-    summary TEXT,
-    body_md TEXT,
-    created_at TEXT DEFAULT (strftime('{{datetime_format}}','now','utc')),
+    -- Metadata
+    author TEXT DEFAULT 'Meher',
+    created_at TEXT NOT NULL DEFAULT (strftime('{{datetime_format}}','now','utc')),
     updated_at TEXT,
-    deleted_at TEXT DEFAULT (strftime('{{datetime_format}}','now','utc'))
+
+    -- New Enhancements
+    thumbnail_url TEXT,  -- preview image for list views
+    tags TEXT            -- comma-separated array of tags
 );

@@ -6,6 +6,7 @@ from posts, projects, and about content stored in the database and markdown file
 import shutil
 from datetime import datetime
 from pathlib import Path
+import logging
 
 import markdown
 from jinja2 import Environment, FileSystemLoader, select_autoescape, TemplateNotFound
@@ -19,10 +20,16 @@ from static_portfolio_generator.controller.config import (
     TEMPLATES_DIR,
     STATIC_DIR,
     CONTENT_DIR,
+    DATETIME_FORMAT
 )
 from static_portfolio_generator.model.posts.db_utils import fetch_all_posts
 from static_portfolio_generator.model.projects.db_utils import fetch_all_projects
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 class SiteBuilder:
     """
@@ -74,7 +81,7 @@ class SiteBuilder:
         self._build_individual_post_pages(posts)
         self._build_individual_project_pages(projects)
 
-        print(
+        logger.info(
             f"Built {len(posts)} posts and {len(projects)} projects into: {self.output_dir}"
         )
 
@@ -112,7 +119,7 @@ class SiteBuilder:
         try:
             dt = datetime.fromisoformat(dt_str)
         except ValueError:
-            dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
+            dt = datetime.strptime(dt_str, DATETIME_FORMAT)
         return dt.strftime("%b %d, %Y")
 
     def _load_posts(self):
@@ -122,26 +129,30 @@ class SiteBuilder:
         rows = fetch_all_posts()
         posts = []
         for r in rows:
-            slug, title, summary, body_md, created_at, updated_at = (
-                r[1],
-                r[2],
-                r[3],
-                r[4],
-                r[5],
-                r[6],
-            )
+            # Unpack DB row according to schema
+            (
+                id_, slug, title, summary, body_md, author,
+                created_at, updated_at, thumbnail_url, tags
+            ) = r
+
+            if not body_md or not body_md.strip():
+                logger.warning(f"Post '{slug}' has empty body content")
+
             summary_text = summary or (body_md[:200] + "...")
             posts.append(
                 {
                     "slug": slug,
-                    "title": title,
+                    "title": self._markdown_to_html(title),
                     "summary_html": self._markdown_to_html(summary_text),
-                    "body_html": self._markdown_to_html(body_md),
+                    "body_html": self._markdown_to_html(body_md or ""),
                     "created_at": self._parse_datetime(created_at),
                     "updated_at": self._parse_datetime(updated_at),
+                    "thumbnail_url": thumbnail_url,
+                    "tags": [t.strip() for t in tags.split(",")] if tags else [],
                 }
             )
         return posts
+
 
     @staticmethod
     def _parse_end_date(duration: str) -> datetime:
@@ -252,7 +263,7 @@ class SiteBuilder:
             )
             (self.output_dir / "index.html").write_text(html, encoding="utf-8")
         except TemplateNotFound:
-            print("❌ Error: 'index.html' template not found.")
+            logger.error("Error: 'index.html' template not found.")
 
     def _build_about_page(self, about_html: str):
         about_dir = self.output_dir / "about"
@@ -268,7 +279,7 @@ class SiteBuilder:
             )
             (about_dir / "index.html").write_text(html, encoding="utf-8")
         except TemplateNotFound:
-            print("❌ Error: 'about.html' template not found.")
+            logger.error("Error: 'about.html' template not found.")
 
     def _build_projects_page(self, projects):
         projects_dir = self.output_dir / "projects"
@@ -284,7 +295,7 @@ class SiteBuilder:
             )
             (projects_dir / "index.html").write_text(html, encoding="utf-8")
         except TemplateNotFound:
-            print("❌ Error: 'projects.html' template not found.")
+            logger.error("Error: 'projects.html' template not found.")
 
     def _build_posts_page(self, posts):
         posts_dir = self.output_dir / "posts"
@@ -300,13 +311,13 @@ class SiteBuilder:
             )
             (posts_dir / "index.html").write_text(html, encoding="utf-8")
         except TemplateNotFound:
-            print("❌ Error: 'posts.html' template not found.")
+            logger.error("Error: 'posts.html' template not found.")
 
     def _build_individual_post_pages(self, posts):
         try:
             template = self.env.get_template("post.html")
         except TemplateNotFound:
-            print("❌ Error: 'post.html' template not found.")
+            logger.error("Error: 'post.html' template not found.")
             return
 
         for post in posts:
@@ -325,7 +336,7 @@ class SiteBuilder:
         try:
             template = self.env.get_template("project.html")
         except TemplateNotFound:
-            print("❌ Error: 'project.html' template not found.")
+            logger.error("Error: 'project.html' template not found.")
             return
 
         for proj in projects:

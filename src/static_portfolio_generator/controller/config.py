@@ -19,4 +19,4 @@ OUTPUT_DIR = "C:/Users/meher/Projects/website-push/"
 STATIC_DIR = ROOT / "view" / "static"
 TEMPLATES_DIR = ROOT / "view" / "templates"
 
-DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"  # e.g. 2025-08-15 14:30:00
+DATETIME_FORMAT = "%Y-%m-%d"  # e.g. 2025-08-15
