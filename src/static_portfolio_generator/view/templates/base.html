@@ -13,8 +13,9 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ base_url }}">
   <meta property="og:title" content="{% block og_title %}{{ site_title }}{% endblock %}">
-  <meta property="og:description" content="{{ description }}">
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
   <meta property="og:image" content="/static/og-image.png">
+  <meta property="og:description" content="{{ description }}">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
@@ -27,7 +28,7 @@
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 
   <title>{% block title %}{{ site_title }}{% endblock %}</title>
-  <link rel="stylesheet" href="{{ base_url ~ '/static/css/style.css' if base_url else '/static/css/style.css' }}">
+  <link rel="stylesheet" href="/static/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -126,7 +127,7 @@
             <!-- Tiny Subscribe Link -->
             <a href="https://tally.so/r/wzpqKg" onclick="Tally.openPopup('wzpqKg'); return false;"
               class="subscribe-link">
-              📬 Subscribe To My Newsletter
+              📬 Newsletter
             </a>
 
             <!-- Load Tally script once -->
