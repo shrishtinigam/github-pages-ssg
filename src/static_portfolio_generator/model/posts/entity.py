@@ -9,14 +9,16 @@ from pathlib import Path
 import re
 import logging
 from datetime import datetime
-from static_portfolio_generator.controller.config import CONTENT_POSTS, DATETIME_FORMAT
-from static_portfolio_generator.model.posts.post import PostData
+
 from static_portfolio_generator.model.posts.db_utils import (
     insert_post,
     delete_post,
     update_post,
     post_exists,
 )
+
+from static_portfolio_generator.controller.config import CONTENT_POSTS, DATETIME_FORMAT
+from static_portfolio_generator.model.posts.post import PostData
 
 logging.basicConfig(
     level=logging.INFO,

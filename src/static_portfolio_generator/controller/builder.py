@@ -24,6 +24,13 @@ from static_portfolio_generator.controller.config import (
 )
 from static_portfolio_generator.model.posts.db_utils import fetch_all_posts
 from static_portfolio_generator.model.projects.db_utils import fetch_all_projects
+from static_portfolio_generator.controller.seo_utils import (
+    generate_sitemap,
+    generate_robots_txt,
+    generate_structured_data_person,
+    generate_structured_data_blog_post,
+    generate_structured_data_website,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -80,6 +87,9 @@ class SiteBuilder:
         self._build_posts_page(posts)
         self._build_individual_post_pages(posts)
         self._build_individual_project_pages(projects)
+        
+        # Generate SEO files
+        self._generate_seo_files(posts, projects)
 
         logger.info(
             f"Built {len(posts)} posts and {len(projects)} projects into: {self.output_dir}"
@@ -350,6 +360,21 @@ class SiteBuilder:
                 base_url=BASE_URL.rstrip("/"),
             )
             (proj_dir / "index.html").write_text(html, encoding="utf-8")
+
+    def _generate_seo_files(self, posts, projects):
+        """
+        Generate SEO-related files: sitemap.xml, robots.txt, and structured data.
+        
+        :param posts: List of post dictionaries
+        :param projects: List of project dictionaries
+        """
+        # Generate sitemap.xml
+        generate_sitemap(BASE_URL, posts, projects, self.output_dir)
+        logger.info("Generated sitemap.xml")
+        
+        # Generate robots.txt
+        generate_robots_txt(BASE_URL, self.output_dir)
+        logger.info("Generated robots.txt")
 
 
 if __name__ == "__main__":

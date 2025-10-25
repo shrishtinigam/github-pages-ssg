@@ -3,6 +3,37 @@
 
 {% block content %}
 
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ author }}",
+  "url": "{{ base_url }}",
+  "description": "{{ description }}",
+  "jobTitle": "Software Engineer",
+  "sameAs": [
+    "https://github.com/shrishtinigam",
+    "https://linkedin.com/in/yourprofile",
+    "https://twitter.com/yourhandle"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ site_title }}",
+  "description": "{{ description }}",
+  "url": "{{ base_url }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ author }}"
+  }
+}
+</script>
+
 <!-- Hero Section -->
 <section class="hero container">
   <h1 class="section-heading">Hello, I'm {{ author }}.</h1>

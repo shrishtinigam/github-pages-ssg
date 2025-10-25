@@ -3,6 +3,24 @@
 
 {% block content %}
 
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title | safe | striptags }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ author }}"
+  },
+  "url": "{{ base_url }}/posts/{{ post.slug }}/",
+  "datePublished": "{{ post.created_at }}",
+  "dateModified": "{{ post.updated_at or post.created_at }}",
+  "description": "{{ post.summary_html | safe | striptags | truncate(200) }}"
+  {% if post.tags %},"keywords": "{{ post.tags | join(', ') }}"{% endif %}
+}
+</script>
+
 <article class="post container">
   <!-- Post Header -->
   <header class="post-header">
