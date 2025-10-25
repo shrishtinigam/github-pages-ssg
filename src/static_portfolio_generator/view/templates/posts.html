@@ -10,7 +10,7 @@
         {% else %}
         {% for post in posts %}
         <article class="post-card">
-            <h3><a href="{{ base_url }}/posts/{{ post.slug }}/">{{ post.title | safe }}</a></h3>
+            <h3><a href="{{ base_url }}/posts/{{ post.slug }}/">{{ post.title | safe | striptags }}</a></h3>
 
             {% if post.created_at or post.updated_at %}
             <div class="post-dates">

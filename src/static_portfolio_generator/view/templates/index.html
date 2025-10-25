@@ -34,17 +34,48 @@
 }
 </script>
 
-<!-- Hero Section -->
-<section class="hero container">
-  <h1 class="section-heading">Hello, I'm {{ author }}.</h1>
-  <p class="hero-description">{{ description }}</p>
-</section>
+<!-- Hero Section with Integrated About -->
+<section class="hero-modern">
+  <div class="hero-container">
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Hi, I'm <span class="gradient-text">Meher</span>
+      </h1>
 
-<!-- About Section -->
-<section id="about" class="container about">
-  <h2 class="section-heading">About Me</h2>
-  <div class="about-text">
-    {{ about_html | safe }}
+      <p class="hero-subtitle">Software Developer @ <strong>BlackRock</strong></p>
+
+      <p class="hero-bio">
+        I turn complex data from <span class="highlight">large-scale analytics systems into actionable insights</span>,
+        helping risk managers make smarter decisions. Passionate about exploring <span class="highlight">AI and
+          large
+          language models</span> to
+        make data smarter and more accessible.
+      </p>
+
+      <div class="hero-tags">
+        <span class="tag-pill">⚡ High-Performance</span>
+        <span class="tag-pill">💻 Software & Distributed Systems</span>
+        <span class="tag-pill">🎓 CS & AI</span>
+        <span class="tag-pill">🎵 Playlist Curator</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="{{ base_url }}/projects" class="btn-primary">
+          View Projects
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </a>
+        <a href="{{ base_url }}/about" class="btn-secondary">Read More</a>
+      </div>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="hero-image">
+      <div class="image-glow"></div>
+      <img src="{{ base_url }}/static/images/profile.png" alt="{{ author }}">
+    </div>
   </div>
 </section>
 
@@ -57,20 +88,48 @@
     {% else %}
     {% for project in projects %}
     <article class="project-card">
-      <h3>
-        <a
-          href="{{ (base_url ~ '/projects/' ~ project.slug ~ '/index.html') if base_url else ('/projects/' ~ project.slug ~ '/index.html') }}">
-          {{ project.title }}
-        </a>
-      </h3>
-      {% if project.project_type and project.duration %}
-      <p class="muted"><strong>{{ project.project_type }}</strong> - <em>{{ project.duration }}</em></p>
+      <!-- Project Image -->
+      {% if project.image %}
+      <div class="project-image">
+        <img src="{{ base_url }}/static/images/projects/{{ project.image }}" alt="{{ project.title }}" loading="lazy">
+      </div>
+      {% else %}
+      <div class="project-image placeholder">
+        <span>🚀</span>
+      </div>
       {% endif %}
-      {% if project.skills %}<p class="muted"><em>{{ project.skills }}</em></p>{% endif %}
-      {% if project.summary %}<p>{{ project.summary }}</p>{% endif %}
-      <a class="read-more" href="{{ project.link or (base_url ~ '/projects/' ~ project.slug ~ '/index.html') }}">
-        {{ 'View Project →' if project.link else 'View Details →' }}
-      </a>
+
+      <!-- Project Content -->
+      <div class="project-content">
+        <div class="project-meta">
+          {% if project.project_type %}
+          <span class="project-type">{{ project.project_type }}</span>
+          {% endif %}
+          {% if project.duration %}
+          <span class="project-duration">{{ project.duration }}</span>
+          {% endif %}
+        </div>
+
+        <h3>
+          <a href="{{ base_url }}/projects/{{ project.slug }}/">
+            {{ project.title }}
+          </a>
+        </h3>
+
+        {% if project.summary %}<p>{{ project.summary }}</p>{% endif %}
+
+        {% if project.skills %}
+        <div class="project-skills">
+          {% for skill in project.skills.split(',') %}
+          <span class="skill-tag">{{ skill.strip() }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <a class="read-more" href="{{ project.link or (base_url ~ '/projects/' ~ project.slug ~ '/') }}">
+          {{ 'View Project' if project.link else 'View Details' }}
+        </a>
+      </div>
     </article>
     {% endfor %}
     {% endif %}
@@ -87,15 +146,20 @@
     {% for p in posts %}
     <article class="post-card">
       <h3>
-        <a
-          href="{{ (base_url ~ '/posts/' ~ p.slug ~ '/index.html') if base_url else ('/posts/' ~ p.slug ~ '/index.html') }}">
-          {{ p.title }}
+        <a href="{{ base_url }}/posts/{{ p.slug }}/">
+          {{ p.title | safe | striptags }}
         </a>
       </h3>
       {% if p.created_at %}<p class="muted">{{ p.created_at }}</p>{% endif %}
       {% if p.summary_html %}<p>{{ p.summary_html | safe }}</p>{% endif %}
-      <a class="read-more"
-        href="{{ (base_url ~ '/posts/' ~ p.slug ~ '/index.html') if base_url else ('/posts/' ~ p.slug ~ '/index.html') }}">
+      {% if p.tags %}
+      <div class="tags">
+        {% for tag in p.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <a class="read-more" href="{{ base_url }}/posts/{{ p.slug }}/">
         Read →
       </a>
     </article>

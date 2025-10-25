@@ -5,22 +5,20 @@
 
 <article class="project container">
     <!-- Project Header -->
-    <div class="project-meta" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+    <div class="project-meta">
         {% if project.project_type %}
-        <span class="muted"><strong>{{ project.project_type }}</strong></span>
+        <span class="project-type">{{ project.project_type }}</span>
         {% endif %}
 
         {% if project.duration %}
-        <span class="muted"><em>{{ project.duration }}</em></span>
+        <span class="project-duration">{{ project.duration }}</span>
         {% endif %}
     </div>
 
-    <!-- Duration & Skills -->
-    <div class="project-meta">
-        {% if project.skills %}
-        <p><em>{{ project.skills }}</em> </p>
-        {% endif %}
-    </div>
+    <!-- Skills -->
+    {% if project.skills %}
+    <p class="project-skills"><em>{{ project.skills }}</em></p>
+    {% endif %}
 
     <!-- Project Description -->
     <div class="project-body">

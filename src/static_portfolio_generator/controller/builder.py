@@ -75,6 +75,7 @@ class SiteBuilder:
         """Main entry point to build the static site."""
         self._ensure_dirs()
         self._copy_static()
+        self._copy_project_images()
 
         posts = self._load_posts()
         projects = self._load_projects()
@@ -101,6 +102,7 @@ class SiteBuilder:
         (self.output_dir / "posts").mkdir(parents=True, exist_ok=True)
         (self.output_dir / "projects").mkdir(parents=True, exist_ok=True)
         (self.output_dir / "static").mkdir(parents=True, exist_ok=True)
+        (self.output_dir / "static" / "images" / "projects").mkdir(parents=True, exist_ok=True)
 
     def _copy_static(self):
         """Copy static assets to output directory."""
@@ -108,6 +110,26 @@ class SiteBuilder:
         if dst.exists():
             shutil.rmtree(dst)
         shutil.copytree(self.static_dir, dst)
+        # Recreate images directory after rmtree
+        (self.output_dir / "static" / "images" / "projects").mkdir(parents=True, exist_ok=True)
+
+    def _copy_project_images(self):
+        """Copy project images from content/projects/images to output static folder."""
+        src_images = self.content_dir / "projects" / "images"
+        dst_images = self.output_dir / "static" / "images" / "projects"
+        
+        if not src_images.exists():
+            logger.info("No project images folder found at content/projects/images")
+            return
+        
+        image_count = 0
+        for image_file in src_images.iterdir():
+            if image_file.is_file() and image_file.suffix.lower() in ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg']:
+                shutil.copy2(image_file, dst_images / image_file.name)
+                image_count += 1
+        
+        if image_count > 0:
+            logger.info(f"Copied {image_count} project images to static/images/projects/")
 
     def _get_env(self) -> Environment:
         """Set up Jinja2 environment."""
@@ -181,6 +203,7 @@ class SiteBuilder:
     def _load_projects(self):
         """
         Fetch projects from DB and convert markdown to HTML.
+        Auto-detect project images based on slug.
         """
         rows = fetch_all_projects()
         projects = []
@@ -196,6 +219,10 @@ class SiteBuilder:
                 created_at,
                 updated_at,
             ) = (r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9])
+            
+            # Auto-detect project image
+            image = self._find_project_image(slug)
+            
             projects.append(
                 {
                     "slug": slug,
@@ -208,12 +235,34 @@ class SiteBuilder:
                     "created_at": self._parse_datetime(created_at),
                     "updated_at": self._parse_datetime(updated_at),
                     "link": None,
+                    "image": image,
                 }
             )
         projects.sort(
             key=lambda p: self._parse_end_date(p.get("duration", "")), reverse=True
         )
         return projects
+    
+    def _find_project_image(self, slug: str) -> str:
+        """
+        Find project image file based on slug.
+        Looks for files like: slug.webp, slug.png, slug.jpg, etc.
+        
+        :param slug: Project slug
+        :return: Image filename if found, empty string otherwise
+        """
+        images_dir = self.content_dir / "projects" / "images"
+        if not images_dir.exists():
+            return ""
+        
+        # Check for common image formats
+        extensions = ['.webp', '.png', '.jpg', '.jpeg', '.gif', '.svg']
+        for ext in extensions:
+            image_file = images_dir / f"{slug}{ext}"
+            if image_file.exists():
+                return f"{slug}{ext}"
+        
+        return ""
 
     def _load_about_summary(self) -> str:
         """

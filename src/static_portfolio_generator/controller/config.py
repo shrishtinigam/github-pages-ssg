@@ -1,7 +1,7 @@
 from pathlib import Path
 
 SITE_TITLE = "shrishtinigam.github.io"
-BASE_URL = 'https://shrishtinigam.github.io' # "C:/Users/meher/Projects/website-push/"  # 
+BASE_URL = "C:/Users/meher/Projects/website-push/" #'https://shrishtinigam.github.io' #   # 
 DESCRIPTION = "Performance, Projects, Perspective"
 AUTHOR = "Meher Shrishti Nigam"
 

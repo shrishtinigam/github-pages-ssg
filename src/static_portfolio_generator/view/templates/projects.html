@@ -10,8 +10,48 @@
         {% else %}
         {% for project in projects %}
         <article class="project-card">
-            <h3><a href="{{ base_url }}/projects/{{ project.slug }}/">{{ project.title }}</a></h3>
-            {% if project.summary %}<p>{{ project.summary }}</p>{% endif %}
+            <!-- Project Image -->
+            {% if project.image %}
+            <div class="project-image">
+                <img src="{{ base_url }}/static/images/projects/{{ project.image }}" alt="{{ project.title }}" loading="lazy">
+            </div>
+            {% else %}
+            <div class="project-image placeholder">
+                <span>🚀</span>
+            </div>
+            {% endif %}
+            
+            <!-- Project Content -->
+            <div class="project-content">
+                <div class="project-meta">
+                    {% if project.project_type %}
+                    <span class="project-type">{{ project.project_type }}</span>
+                    {% endif %}
+                    {% if project.duration %}
+                    <span class="project-duration">{{ project.duration }}</span>
+                    {% endif %}
+                </div>
+                
+                <h3>
+                    <a href="{{ base_url }}/projects/{{ project.slug }}/">
+                        {{ project.title }}
+                    </a>
+                </h3>
+                
+                {% if project.summary %}<p>{{ project.summary }}</p>{% endif %}
+                
+                {% if project.skills %}
+                <div class="project-skills">
+                    {% for skill in project.skills.split(',') %}
+                    <span class="skill-tag">{{ skill.strip() }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <a class="read-more" href="{{ project.link or (base_url ~ '/projects/' ~ project.slug ~ '/') }}">
+                    {{ 'View Project' if project.link else 'View Details' }}
+                </a>
+            </div>
         </article>
         {% endfor %}
         {% endif %}
