@@ -1,17 +1,24 @@
+"""Build the complete portfolio and assert its essential public routes."""
+
 from pathlib import Path
 import subprocess
+import json
+import re
 import sys
 import tempfile
 import unittest
 
 
 class PelicanBuildTest(unittest.TestCase):
+    """Smoke-test the real Pelican build in isolated output storage."""
+
     def test_expected_routes_and_content_are_generated(self):
+        """Keep the original collections and exclude the unwanted fourth post."""
         root = Path(__file__).parents[1]
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "output"
             subprocess.run(
-                [sys.executable, "-m", "pelican", "content", "-s", "publishconf.py", "-o", str(output), "-t", "theme"],
+                [sys.executable, "-m", "pelican", "content", "-s", "publishconf.py", "-o", str(output), "-t", "theme", "--fatal", "warnings"],
                 cwd=root,
                 check=True,
                 capture_output=True,
@@ -39,6 +46,11 @@ class PelicanBuildTest(unittest.TestCase):
             self.assertIn("Node.js", homepage)
             self.assertIn("Get Semantic Versioning Right in Your Python Library - Part 3", homepage)
             self.assertIn("Pathfinding Algorithms Visualizers (SFML)", homepage)
+            post = (output / "posts/semantic-versioning-p1/index.html").read_text()
+            for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', post, re.S):
+                data = json.loads(block)
+                if data.get("@type") == "BlogPosting":
+                    self.assertEqual(data["keywords"], "python, software versioning, pep standards")
 
 
 if __name__ == "__main__":

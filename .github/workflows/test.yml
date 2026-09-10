@@ -17,3 +17,9 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - run: make check
       - run: make test
+      - name: Install the distributable package and smoke-test its command
+        run: |
+          python -m pip wheel . --no-deps --wheel-dir "$RUNNER_TEMP/portfolio-wheels"
+          python -m pip install --force-reinstall --no-deps "$RUNNER_TEMP"/portfolio-wheels/*.whl
+          spg check
+          spg build --output "$RUNNER_TEMP/portfolio-installed-output"

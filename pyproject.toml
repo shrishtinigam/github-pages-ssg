@@ -19,4 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
-spg = "static_portfolio_generator.cli:spg"
+spg = "portfolio_cli:main"
+
+[tool.setuptools]
+py-modules = ["portfolio_cli", "pelican_readers", "pelican_compat"]

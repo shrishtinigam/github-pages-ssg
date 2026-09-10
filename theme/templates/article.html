@@ -8,7 +8,7 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "{{ article.title | safe | striptags }}",
+  "headline": {{ article.title | striptags | tojson }},
   "author": {
     "@type": "Person",
     "name": "{{ author }}"
@@ -16,8 +16,8 @@
   "url": "{{ base_url }}/posts/{{ article.slug }}/",
   "datePublished": "{{ article.date.strftime('%b %d, %Y') }}",
   "dateModified": "{{ article.metadata.get('updated', article.date.strftime('%b %d, %Y')) }}",
-  "description": "{{ article.metadata.get('summary', '') | safe | striptags | truncate(200) }}"
-  {% if article.metadata.get('tags') %},"keywords": "{{ article.metadata.get('tags') }}"{% endif %}
+  "description": {{ article.metadata.get('summary', '') | striptags | truncate(200) | tojson }}
+  {% if article.metadata.get('tags') %},"keywords": {{ article.metadata.get('tags') | join(', ') | tojson }}{% endif %}
 }
 </script>
 
