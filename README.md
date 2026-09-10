@@ -59,9 +59,9 @@ make test
 make build
 ```
 
-The generated site is written to `output/`. Keep generated output outside the
-SSG repository when using the generator against another website checkout; do
-not place a Git repository inside `output/`.
+`make build` writes the generated site to the sibling directory
+`../pelican-output/`, outside this SSG repository. Do not place a Git
+repository inside generated output.
 
 ## Preserved routes
 

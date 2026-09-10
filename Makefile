@@ -7,7 +7,7 @@ check:
 	python3 -m pelican content -s pelicanconf.py -o /tmp/portfolio-pelican-check -t theme --fatal warnings
 
 build:
-	python3 -m pelican content -s publishconf.py -o output -t theme
+	python3 -m pelican content -s publishconf.py -o ../pelican-output -t theme
 
 test:
 	python3 -m unittest discover -s tests -v
