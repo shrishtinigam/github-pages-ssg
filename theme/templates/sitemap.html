@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{{ (SITEURL.rstrip('/') ~ '/') | e }}</loc></url>
+{% for entry in pages + articles %}
+  <url><loc>{{ (SITEURL.rstrip('/') ~ '/' ~ entry.url.lstrip('/')) | e }}</loc></url>
+{% endfor %}
+</urlset>

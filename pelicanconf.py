@@ -15,7 +15,9 @@ PAGE_URL = "{slug}/"
 PAGE_SAVE_AS = "{slug}/index.html"
 THEME_STATIC_DIR = "static"
 STATIC_PATHS = ["images"]
-DIRECT_TEMPLATES = ["index"]
+DIRECT_TEMPLATES = ["index", "robots", "sitemap"]
+ROBOTS_SAVE_AS = "robots.txt"
+SITEMAP_SAVE_AS = "sitemap.xml"
 INDEX_SAVE_AS = "index.html"
 # The portfolio has explicit collection pages; do not publish Pelican's
 # auxiliary author/category/tag archives as extra public routes.

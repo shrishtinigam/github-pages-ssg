@@ -7,6 +7,7 @@ import re
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 
 
 class PelicanBuildTest(unittest.TestCase):
@@ -41,6 +42,16 @@ class PelicanBuildTest(unittest.TestCase):
             for route in expected_routes:
                 self.assertTrue((output / route).exists(), route)
             self.assertFalse((output / "posts/semantic-versioning/index.html").exists())
+            robots = (output / "robots.txt").read_text()
+            self.assertIn("User-agent: *\nAllow: /", robots)
+            self.assertIn("Sitemap: https://shrishtinigam.github.io/sitemap.xml", robots)
+            sitemap = ET.parse(output / "sitemap.xml")
+            locations = [node.text for node in sitemap.findall(
+                ".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+            expected_urls = {"https://shrishtinigam.github.io/" + route[:-len("index.html")]
+                             for route in expected_routes}
+            self.assertEqual(set(locations), expected_urls)
+            self.assertEqual(len(locations), len(expected_urls))
             homepage = (output / "index.html").read_text(encoding="utf-8")
             self.assertIn("Microservices Based E-Commerce Web App", homepage)
             self.assertIn("Node.js", homepage)

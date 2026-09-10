@@ -90,6 +90,11 @@ thumbnails in `theme/static/images/projects/` retain their `/static/` paths.
 
 ## Preserved routes
 
+Each build also generates `robots.txt` (allowing crawlers and pointing to the
+sitemap) and `sitemap.xml` from the homepage and published pages/articles.
+New posts and projects are included automatically. Optional modification
+dates and ranking hints are omitted rather than publishing placeholder dates.
+
 - `/`
 - `/about/`
 - `/projects/`
