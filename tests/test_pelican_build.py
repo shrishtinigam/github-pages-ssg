@@ -1,5 +1,6 @@
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -10,7 +11,7 @@ class PelicanBuildTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "output"
             subprocess.run(
-                [str(root / ".venv/bin/pelican"), "content", "-s", "publishconf.py", "-o", str(output), "-t", "theme"],
+                [sys.executable, "-m", "pelican", "content", "-s", "publishconf.py", "-o", str(output), "-t", "theme"],
                 cwd=root,
                 check=True,
                 capture_output=True,
