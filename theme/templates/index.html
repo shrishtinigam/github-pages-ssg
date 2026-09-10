@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ site_title }}{% endblock %}
+{% block content %}
+<section class="hero-modern"><div class="hero-container"><div class="hero-content">
+  <h1 class="hero-title">Hi, I'm <span class="gradient-text">Meher</span></h1>
+  <p class="hero-subtitle">Software Developer @ <strong>BlackRock</strong></p>
+  <p class="hero-bio">I turn complex data from <span class="highlight">large-scale analytics systems into actionable insights</span>, helping risk managers make smarter decisions. Passionate about exploring <span class="highlight">AI and large language models</span> to make data smarter and more accessible.</p>
+  <div class="hero-tags"><span class="tag-pill">⚡ High-Performance</span><span class="tag-pill">💻 Software & Distributed Systems</span><span class="tag-pill">🎓 CS & AI</span><span class="tag-pill">🎵 Playlist Curator</span></div>
+  <div class="hero-actions"><a href="{{ base_url }}/projects/" class="btn-primary">View Projects</a><a href="{{ base_url }}/about/" class="btn-secondary">Read More</a></div>
+</div><div class="hero-image"><div class="image-glow"></div><img src="{{ base_url }}/static/images/profile.png" alt="{{ author }}"></div></div></section>
+<section id="projects" class="container projects"><h2 class="section-heading">Projects</h2><div class="project-list">
+{% for project in articles if project.category.name == 'projects' %}<article class="project-card"><div class="project-image"><img src="{{ base_url }}/static/images/projects/{{ project.metadata.get('image') or (project.slug ~ '.jpg') }}" alt="{{ project.title }}" loading="lazy"></div><div class="project-content"><div class="project-meta"><span class="project-type">{{ project.metadata.get('project_type') }}</span><span class="project-duration">{{ project.metadata.get('duration') }}</span></div><h3><a href="{{ base_url }}/projects/{{ project.slug }}/">{{ project.title }}</a></h3><p>{{ project.metadata.get('summary') }}</p><div class="project-skills"><span class="skill-tag">{{ project.metadata.get('skills') }}</span></div><a class="read-more" href="{{ base_url }}/projects/{{ project.slug }}/">View Details</a></div></article>{% endfor %}
+</div></section>
+<section id="posts" class="container posts"><h2 class="section-heading">Latest Blog Posts</h2><div class="post-list">{% set shown = namespace(count=0) %}{% for post in articles if post.category.name == 'posts' and shown.count < 3 %}<article class="post-card"><h3><a href="{{ base_url }}/posts/{{ post.slug }}/">{{ post.title }}</a></h3><p class="muted">{{ post.date.strftime('%b %d, %Y') }}</p><p>{{ post.metadata.get('summary') }}</p><a class="read-more" href="{{ base_url }}/posts/{{ post.slug }}/">Read →</a></article>{% set shown.count = shown.count + 1 %}{% endfor %}</div></section>
+{% endblock %}

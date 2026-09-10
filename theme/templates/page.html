@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} — {{ site_title }}{% endblock %}
+{% block content %}
+{% if page.template == 'posts' %}
+{% include "posts.html" %}
+{% elif page.template == 'projects' %}
+{% include "projects.html" %}
+{% else %}
+<section class="about container"><h2 class="section-heading">About Me</h2><div class="about-text">{{ page.content | safe }}</div></section>
+{% endif %}
+{% endblock %}

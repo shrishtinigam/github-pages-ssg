@@ -1,84 +1,76 @@
+# Portfolio Pelican SSG
 
-# Python Static Site Generator (SSG)
+The standalone Python static-site generator for `shrishtinigam.github.io`.
+It uses Pelican for content parsing, URL generation, feeds, and static output;
+the custom theme preserves the existing portfolio design.
 
-A lightweight static site generator built with Python and Jinja2.  
-This project follows a simplified Model View Controller (MVC) pattern for clean separation of content, templates, and build logic.
+## Authoring workflow
 
-## Features
-- Write content in Python models (`entities/` folder)  
-- Use Jinja2 templates (`templates/`) for layout and styling  
-- Output clean static HTML to the `BASE_URL` folder  
-- Easy to extend with new entities (Posts, Projects, Research, Exp etc.)  
-- Supports custom styling with `static/` (CSS, JS, images)  
-
-## Installation
-Clone the repository and install dependencies:
-
-```bash
-git clone https://github.com/shrishtinigam/github-pages-ssg.git
-cd github-pages-ssg
-pip install -r requirements.txt
-````
-
-Dependencies:
-
-* jinja2
-* Markdown
-
-## Usage
-
-To build the site:
-
-```bash
-python controller/build.py
+```text
+write Markdown → add images → make check → make build → deploy output/
 ```
 
-Your static site will be generated inside the BASE_URL folder. Open `BASE_URL/index.html` in your browser to preview.
+Content lives in `content/posts/`, `content/projects/`, `content/pages/`, and
+`content/images/`.
 
-## How It Works (WIP !)
+Posts use YAML front matter:
 
-1. **Models (entities/)**
-   Each content type (e.g., `Post`) is defined as a Python class.
+```markdown
+---
+Title: My post
+Slug: my-post
+Date: 2025-01-01
+Summary: A short description shown on listing pages.
+Tags:
+  - python
+  - systems
+---
 
-   Example:
+## The article
 
-   ```python
-   from dataclasses import dataclass
+Write normal Markdown here. Raw HTML is also supported when preserving an
+existing section requires it.
+```
 
-   @dataclass
-   class Post:
-       title: str
-       slug: str
-       description: str
-       body_html: str
-   ```
+Projects use the same format with project-specific fields:
 
-2. **Views (templates/)**
-   Jinja2 templates define how content is rendered.
+```markdown
+---
+Title: My project
+Slug: my-project
+Project Type: Personal Project
+Duration: 2025
+Summary: A short project-card description.
+Skills: Python · Docker · PostgreSQL
+Image: my-project.jpg
+---
+```
 
-   Example snippet from `index.html`:
+Put project images in `theme/static/images/projects/` or shared images in
+`content/images/`. They are copied to the generated `static/` directory.
 
-   ```html
-   {% for post in posts %}
-     <h2><a href="{{ post.slug }}.html">{{ post.title }}</a></h2>
-   {% endfor %}
-   ```
+## Local setup
 
-3. **Controller (build.py)**
-   The build script loads entities, passes them to templates, and writes static HTML files.
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -e .
+make check
+make test
+make build
+```
 
-## Customization
+The generated site is written to `output/`. Keep generated output outside the
+SSG repository when using the generator against another website checkout; do
+not place a Git repository inside `output/`.
 
-* Modify `view/templates/base.html` and `view/static/style.css` for global layout
-* Add your content in a `/content` directory
+## Preserved routes
 
-## Roadmap
+- `/`
+- `/about/`
+- `/projects/`
+- `/projects/<slug>/`
+- `/posts/`
+- `/posts/<slug>/`
 
-* [ ] Deployment guide (GitHub Pages)
-* [ ] Add OOPs based class structure to entities
-* [ ] Add more entity types (Research, Job Experiences)
-
-## License
-
-MIT License
-
+The theme, CSS, JavaScript, images, navigation, theme toggle, cards, footer,
+and existing content are kept compatible with the current published site.

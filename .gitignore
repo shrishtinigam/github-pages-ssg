@@ -1,11 +1,11 @@
 /venv/
+/.venv/
 /output/
 /__pycache__/
 *.pyc
 *.db
 .DS_Store
 /root/
-/content/
 /model/data/
 src/static_portfolio_generator.egg-info/
 TODO.md
