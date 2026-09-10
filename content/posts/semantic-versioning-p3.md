@@ -26,7 +26,7 @@ Tags:
 <h3 id="development-pre-release-versions">Development &amp; Pre-release Versions</h3>
 <p>When a library is preparing a new release, there are several intermediate stages before the final stable version. PEP 440 defines how these are labeled.</p>
 <h4 id="example-backward-compatible-update">Example: Backward-Compatible Update</h4>
-<p>Suppose a library is at 1.2.0 and wants to release backward-compatible new features. 
+<p>Suppose a library is at 1.2.0 and wants to release backward-compatible new features.
 According to SemVer / PEP 440, this means a minor bump → 1.3.0.</p>
 <p>Development &amp; pre-release versions could look like this:</p>
 <pre class="codehilite"><code class="language-bash">1.3.0.dev1   # dev snapshot
@@ -174,6 +174,6 @@ Version progression:</p>
 <p><br></p>
 <details>
 
-I remember being 11-12 years old, sitting at a restaurant with my brother while he was reciting different Andriod versions for me. Each candy-named version evoked a higher pitched laugh, and this remains a fond memory of mine. 
+I remember being 11-12 years old, sitting at a restaurant with my brother while he was reciting different Andriod versions for me. Each candy-named version evoked a higher pitched laugh, and this remains a fond memory of mine.
 
 </details>

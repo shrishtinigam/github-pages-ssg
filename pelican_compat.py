@@ -19,12 +19,9 @@ class LegacyContent:
 
     def __init__(self, article):
         """Copy the fields used by the legacy templates from a Pelican article."""
-        self._article = article
         self.metadata = article.metadata
         self.title = article.title
         self.slug = article.slug
-        self.body_html = article.content
-        self.description_html = article.content
         self.created_at = _date(article.date)
         self.date = article.date
         self.updated_at = _date(article.metadata.get("updated"))

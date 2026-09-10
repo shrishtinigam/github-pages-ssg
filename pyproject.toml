@@ -3,9 +3,9 @@ requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "static_portfolio_generator"
-version = "0.0.1"
-description = "Static site portfolio generator"
+name = "portfolio-pelican-ssg"
+version = "0.1.0"
+description = "Pelican-based static site generator for the portfolio"
 authors = [
     { name = "Meher Shrishti Nigam" }
 ]
