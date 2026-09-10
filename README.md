@@ -70,6 +70,9 @@ Use `--project /path/to/github-pages-ssg` when running outside the checkout.
 The installed package includes the Pelican reader and adapter; the checkout
 provides editable content, configuration, and theme files. The old database
 CLI is no longer the installed `spg` entry point.
+The obsolete database/MVC implementation and duplicate frontend files have
+been removed. They remain recoverable from Git history; the active frontend
+lives in `theme/`.
 
 Every document requires a nonempty Title and a lowercase, hyphenated Slug.
 Posts require a valid Date; Updated is optional. Tags may be a string or a

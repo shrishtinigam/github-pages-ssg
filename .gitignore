@@ -6,6 +6,7 @@
 *.db
 .DS_Store
 /root/
-/model/data/
-src/static_portfolio_generator.egg-info/
+*.egg-info/
+/build/
+/dist/
 TODO.md
