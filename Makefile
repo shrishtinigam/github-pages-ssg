@@ -1,16 +1,15 @@
-.PHONY: install check build test clean
+.PHONY: install check build test
+PYTHON ?= python3
+OUTPUT ?= ../pelican-output
 
 install:
-	python3 -m pip install .
+	$(PYTHON) -m pip install .
 
 check:
-	python3 -m pelican content -s pelicanconf.py -o /tmp/portfolio-pelican-check -t theme --fatal warnings
+	$(PYTHON) -m portfolio_cli check
 
 build:
-	python3 -m pelican content -s publishconf.py -o ../pelican-output -t theme
+	$(PYTHON) -m portfolio_cli build --output "$(OUTPUT)"
 
 test:
-	python3 -m unittest discover -s tests -v
-
-clean:
-	python3 -c "import shutil; shutil.rmtree('output', ignore_errors=True)"
+	$(PYTHON) -m unittest discover -s tests -v
