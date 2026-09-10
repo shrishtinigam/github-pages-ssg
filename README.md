@@ -1,84 +1,106 @@
+# Portfolio Pelican SSG
 
-# Python Static Site Generator (SSG)
+The standalone Python static-site generator for `shrishtinigam.github.io`.
+It uses Pelican for content parsing, URL generation, feeds, and static output;
+the custom theme preserves the existing portfolio design.
 
-A lightweight static site generator built with Python and Jinja2.  
-This project follows a simplified Model View Controller (MVC) pattern for clean separation of content, templates, and build logic.
+## Authoring workflow
 
-## Features
-- Write content in Python models (`entities/` folder)  
-- Use Jinja2 templates (`templates/`) for layout and styling  
-- Output clean static HTML to the `BASE_URL` folder  
-- Easy to extend with new entities (Posts, Projects, Research, Exp etc.)  
-- Supports custom styling with `static/` (CSS, JS, images)  
-
-## Installation
-Clone the repository and install dependencies:
-
-```bash
-git clone https://github.com/shrishtinigam/github-pages-ssg.git
-cd github-pages-ssg
-pip install -r requirements.txt
-````
-
-Dependencies:
-
-* jinja2
-* Markdown
-
-## Usage
-
-To build the site:
-
-```bash
-python controller/build.py
+```text
+write Markdown → add images → spg check → spg build → deploy ../pelican-output/
 ```
 
-Your static site will be generated inside the BASE_URL folder. Open `BASE_URL/index.html` in your browser to preview.
+Content lives in `content/posts/`, `content/projects/`, `content/pages/`, and
+`content/images/`.
 
-## How It Works (WIP !)
+Posts use YAML front matter:
 
-1. **Models (entities/)**
-   Each content type (e.g., `Post`) is defined as a Python class.
+```markdown
+---
+Title: My post
+Slug: my-post
+Date: 2025-01-01
+Summary: A short description shown on listing pages.
+Tags:
+  - python
+  - systems
+---
 
-   Example:
+## The article
 
-   ```python
-   from dataclasses import dataclass
+Write normal Markdown here. Raw HTML is also supported when preserving an
+existing section requires it.
+```
 
-   @dataclass
-   class Post:
-       title: str
-       slug: str
-       description: str
-       body_html: str
-   ```
+Projects use the same format with project-specific fields:
 
-2. **Views (templates/)**
-   Jinja2 templates define how content is rendered.
+```markdown
+---
+Title: My project
+Slug: my-project
+Project Type: Personal Project
+Duration: 2025
+Summary: A short project-card description.
+Skills: Python · Docker · PostgreSQL
+Image: my-project.jpg
+---
+```
 
-   Example snippet from `index.html`:
+Put project images in `theme/static/images/projects/` or shared images in
+`content/images/`. Theme assets are copied to `static/`; content images to `images/`.
 
-   ```html
-   {% for post in posts %}
-     <h2><a href="{{ post.slug }}.html">{{ post.title }}</a></h2>
-   {% endfor %}
-   ```
+## Local setup
 
-3. **Controller (build.py)**
-   The build script loads entities, passes them to templates, and writes static HTML files.
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -e .
+source .venv/bin/activate
+spg check
+make test
+spg build
+```
 
-## Customization
+`spg build` writes the generated site to the sibling directory
+`../pelican-output/`, outside this SSG repository. Do not place a Git
+repository inside generated output.
 
-* Modify `view/templates/base.html` and `view/static/style.css` for global layout
-* Add your content in a `/content` directory
+The installed `spg check` command validates a checkout in temporary storage.
+Use `spg build --output ../my-site-build` to build into a fresh, empty directory.
+Use `--project /path/to/github-pages-ssg` when running outside the checkout.
+Relative output paths are always resolved against that project directory.
+`make check` and `make build` are developer shortcuts for the same CLI code;
+`make build OUTPUT=../my-site-build` matches `spg build --output ../my-site-build`.
+Both reject nonempty output directories and treat build warnings as errors.
+`spg check` always uses temporary output and leaves existing builds alone.
+Direct Pelican invocation is an internal implementation detail; use `spg` for
+the supported validation and output-protection behavior.
+The installed package includes the Pelican reader and adapter; the checkout
+provides editable content, configuration, and theme files. The old database
+CLI is no longer the installed `spg` entry point.
+The obsolete database/MVC implementation and duplicate frontend files have
+been removed. They remain recoverable from Git history; the active frontend
+lives in `theme/`.
 
-## Roadmap
+Every document requires a nonempty Title and a lowercase, hyphenated Slug.
+Posts require a valid Date; Updated is optional. Tags may be a string or a
+list of strings, and project Order must be an integer. Undated projects use
+an internal placeholder date required by Pelican; it is not shown on cards.
+Shared images in `content/images/` are published under `/images/`; project
+thumbnails in `theme/static/images/projects/` retain their `/static/` paths.
 
-* [ ] Deployment guide (GitHub Pages)
-* [ ] Add OOPs based class structure to entities
-* [ ] Add more entity types (Research, Job Experiences)
+## Preserved routes
 
-## License
+Each build also generates `robots.txt` (allowing crawlers and pointing to the
+sitemap) and `sitemap.xml` from the homepage and published pages/articles.
+New posts and projects are included automatically. Optional modification
+dates and ranking hints are omitted rather than publishing placeholder dates.
 
-MIT License
+- `/`
+- `/about/`
+- `/projects/`
+- `/projects/<slug>/`
+- `/posts/`
+- `/posts/<slug>/`
 
+The theme, CSS, JavaScript, images, navigation, theme toggle, cards, footer,
+and existing content are kept compatible with the current published site.

@@ -3,18 +3,23 @@ requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "static_portfolio_generator"
-version = "0.0.1"
-description = "Static site portfolio generator"
+name = "portfolio-pelican-ssg"
+version = "0.1.0"
+description = "Pelican-based static site generator for the portfolio"
 authors = [
     { name = "Meher Shrishti Nigam" }
 ]
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "Jinja2==3.1.4",
-    "Markdown==3.6"
+    "pelican>=4.9,<5",
+    "Jinja2>=3.1,<4",
+    "Markdown>=3.7,<4",
+    "python-frontmatter>=1.0,<1.1"
 ]
 
 [project.scripts]
-spg = "static_portfolio_generator.cli:spg"
+spg = "portfolio_cli:main"
+
+[tool.setuptools]
+py-modules = ["portfolio_cli", "pelican_readers", "pelican_compat"]
