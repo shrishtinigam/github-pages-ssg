@@ -1,9 +1,10 @@
 ---
-Title: Multilingual NER — Corpus Sampling for Indian Languages
+Title: Multilingual Named Entity Recognition using XLM-RoBERTa
+Page Title: Multilingual NER — Corpus Sampling for Indian Languages
 Slug: mner-xlm-roberta
 Project Type: University Project
 Duration: May 2022 - Jul 2022
-Summary: Fine-tuned XLM-RoBERTa for multilingual Named Entity Recognition (NER) on Indian languages.
+Summary: Fine-tuned XLM-RoBERTa for multilingual Named Entity Recognition on Indian languages, achieving effective cross-lingual performance.
 Skills: Large Language Models (LLM) · Transformer Models · Named Entity Recognition (NER) · NLP · Python
 Image: mner-xlm-roberta.jpg
 Order: 5

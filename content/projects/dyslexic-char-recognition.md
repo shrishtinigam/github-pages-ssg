@@ -3,7 +3,7 @@ Title: Dyslexic Character Recognition
 Slug: dyslexic-char-recognition
 Project Type: University Project
 Duration: Sep 2022 - Nov 2022
-Summary: Developed a deep learning-based system to recognize handwritten characters by individuals with dyslexia or dysgraphia (affecting 9-12% of population).
+Summary: CNN-based system to recognize handwritten characters for dyslexia, achieving 90% accuracy.
 Skills: Convolutional Neural Networks (CNN) · TensorFlow · Python
 Image: dyslexic-char-recognition.jpg
 Order: 3

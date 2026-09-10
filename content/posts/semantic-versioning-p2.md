@@ -2,7 +2,8 @@
 Title: Get Semantic Versioning Right in Your Python Library - Part 2
 Slug: semantic-versioning-p2
 Date: Sep 21, 2025
-Summary: Now that we have a basic understanding of software versioning principles and the Python interpreter/standard libraries, we can get on with how Python libraries are versioned.
+Updated: Oct 25, 2025
+Summary: Part 2 builds on core versioning principles, and explores how Python libraries handle versioning.
 Tags:
   - python
   - semver

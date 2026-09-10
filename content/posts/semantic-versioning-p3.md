@@ -2,7 +2,8 @@
 Title: Get Semantic Versioning Right in Your Python Library - Part 3
 Slug: semantic-versioning-p3
 Date: Sep 28, 2025
-Summary: In this final part of getting versioning right in your Python library, I explore practical steps to ensure your library is maintainable, PEP-compliant, and future-proof. I also plan to add more code and practical examples in the future.
+Updated: Oct 25, 2025
+Summary: Part 3 covers practical steps to build your own Python library.
 Tags:
   - python
   - pypi

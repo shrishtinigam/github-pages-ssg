@@ -16,14 +16,28 @@ class PelicanBuildTest(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
-            self.assertTrue((output / "index.html").exists())
-            self.assertTrue((output / "about/index.html").exists())
-            self.assertTrue((output / "posts/semantic-versioning-p1/index.html").exists())
-            self.assertTrue((output / "projects/microservices-based-web-app/index.html").exists())
+            expected_routes = [
+                "index.html",
+                "about/index.html",
+                "posts/index.html",
+                "posts/semantic-versioning-p1/index.html",
+                "posts/semantic-versioning-p2/index.html",
+                "posts/semantic-versioning-p3/index.html",
+                "projects/index.html",
+                "projects/microservices-based-web-app/index.html",
+                "projects/pathfinding-algorithms-visualizer/index.html",
+                "projects/dyslexic-char-recognition/index.html",
+                "projects/chronic-kidney-disease-pred/index.html",
+                "projects/mner-xlm-roberta/index.html",
+            ]
+            for route in expected_routes:
+                self.assertTrue((output / route).exists(), route)
             self.assertFalse((output / "posts/semantic-versioning/index.html").exists())
             homepage = (output / "index.html").read_text(encoding="utf-8")
-            self.assertIn("Ticket House", homepage)
+            self.assertIn("Microservices Based E-Commerce Web App", homepage)
             self.assertIn("Node.js", homepage)
+            self.assertIn("Get Semantic Versioning Right in Your Python Library - Part 3", homepage)
+            self.assertIn("Pathfinding Algorithms Visualizers (SFML)", homepage)
 
 
 if __name__ == "__main__":

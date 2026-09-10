@@ -1,9 +1,9 @@
 ---
-Title: Pathfinding Algorithms Visualizer (SFML)
+Title: Pathfinding Algorithms Visualizers (SFML)
 Slug: pathfinding-algorithms-visualizer
 Project Type: University Project
 Duration: May 2023 - Jun 2023
-Summary: Visualized four pathfinding algorithms (Dijkstra's, A*, BFS, DFS) on a grid map.
+Summary: Visualized and optimized four pathfinding algorithms on a grid map using C++ and SFML, highlighting performance metrics and efficient A* implementation.
 Skills: Object-Oriented Programming (OOP) · C++ · SFML
 Image: pathfinding-algorithms-visualizer.jpg
 Order: 2

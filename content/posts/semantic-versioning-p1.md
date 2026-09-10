@@ -2,7 +2,8 @@
 Title: Get Semantic Versioning Right in Your Python Library - Part 1
 Slug: semantic-versioning-p1
 Date: Sep 10, 2025
-Summary: Understanding versioning and release management of Python is crucial if you maintain Python libraries for a living, as I do. A thorough understanding helps you avoid dependency hell and ensures smooth upgrades during releases. To truly unde
+Updated: Oct 25, 2025
+Summary: Part 1 of a deep dive into Python versioning and release management to avoid dependency issues and ensure smooth upgrades.
 Tags:
   - python
   - software versioning

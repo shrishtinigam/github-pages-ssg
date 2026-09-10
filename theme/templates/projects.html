@@ -1,3 +1,60 @@
 {% extends "base.html" %}
 {% block title %}Projects — {{ site_title }}{% endblock %}
-{% block content %}<section class="projects container"><h2 class="section-heading">Projects</h2><div class="project-list">{% for project in articles if project.category.name == 'projects' %}<article class="project-card"><div class="project-image"><img src="{{ base_url }}/static/images/projects/{{ project.metadata.get('image') or (project.slug ~ '.jpg') }}" alt="{{ project.title }}" loading="lazy"></div><div class="project-content"><div class="project-meta"><span class="project-type">{{ project.metadata.get('project_type') }}</span><span class="project-duration">{{ project.metadata.get('duration') }}</span></div><h3><a href="{{ base_url }}/projects/{{ project.slug }}/">{{ project.title }}</a></h3><p>{{ project.metadata.get('summary') }}</p><div class="project-skills"><span class="skill-tag">{{ project.metadata.get('skills') }}</span></div><a class="read-more" href="{{ base_url }}/projects/{{ project.slug }}/">View Details</a></div></article>{% endfor %}</div></section>{% endblock %}
+
+{% block content %}
+<section class="projects container">
+    <h2 class="section-heading">Projects</h2>
+    <div class="project-list">
+        {% if projects|length == 0 %}
+        <p>No projects yet.</p>
+        {% else %}
+        {% for project in projects %}
+        <article class="project-card">
+            <!-- Project Image -->
+            {% if project.image %}
+            <div class="project-image">
+                <img src="{{ base_url }}/static/images/projects/{{ project.image }}" alt="{{ project.title }}" loading="lazy">
+            </div>
+            {% else %}
+            <div class="project-image placeholder">
+                <span>🚀</span>
+            </div>
+            {% endif %}
+            
+            <!-- Project Content -->
+            <div class="project-content">
+                <div class="project-meta">
+                    {% if project.project_type %}
+                    <span class="project-type">{{ project.project_type }}</span>
+                    {% endif %}
+                    {% if project.duration %}
+                    <span class="project-duration">{{ project.duration }}</span>
+                    {% endif %}
+                </div>
+                
+                <h3>
+                    <a href="{{ base_url }}/projects/{{ project.slug }}/">
+                        {{ project.title }}
+                    </a>
+                </h3>
+                
+                {% if project.summary %}<p>{{ project.summary }}</p>{% endif %}
+                
+                {% if project.skills %}
+                <div class="project-skills">
+                    {% for skill in project.skills.split(',') %}
+                    <span class="skill-tag">{{ skill.strip() }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <a class="read-more" href="{{ project.link or (base_url ~ '/projects/' ~ project.slug ~ '/') }}">
+                    {{ 'View Project' if project.link else 'View Details' }}
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

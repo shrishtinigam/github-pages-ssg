@@ -1,13 +1,53 @@
 {% extends "base.html" %}
-{% block title %}{{ article.title }} · {{ site_title }}{% endblock %}
+{% block title %}{{ article.title | safe | striptags }} · {{ site_title }}{% endblock %}
+
 {% block content %}
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ article.title | safe | striptags }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ author }}"
+  },
+  "url": "{{ base_url }}/posts/{{ article.slug }}/",
+  "datePublished": "{{ article.date.strftime('%b %d, %Y') }}",
+  "dateModified": "{{ article.metadata.get('updated', article.date.strftime('%b %d, %Y')) }}",
+  "description": "{{ article.metadata.get('summary', '') | safe | striptags | truncate(200) }}"
+  {% if article.metadata.get('tags') %},"keywords": "{{ article.metadata.get('tags') }}"{% endif %}
+}
+</script>
+
 <article class="post container">
+  <!-- Post Header -->
   <header class="post-header">
-    <h1>{{ article.title }}</h1>
-    <p class="muted">{% if article.date %}Published: {{ article.date.strftime('%b %d, %Y') }}{% endif %}</p>
-    {% if article.tags %}<p class="tags">{% for tag in article.tags %}<span class="tag">{{ tag }}</span>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+    <h1>{{ article.title | safe | striptags }}</h1>
+    <p class="muted">
+      {% if article.date %}Published: {{ article.date.strftime('%b %d, %Y') }}{% endif %}
+      {% if article.metadata.get('updated') %} &nbsp;|&nbsp; Last updated: {{ article.metadata.get('updated') }}{% endif %}
+    </p>
+
+    {% if article.metadata.get('tags') %}
+    <p class="tags">
+      {% for tag in article.metadata.get('tags') %}
+      <span class="tag">{{ tag.name if tag.name is defined else tag }}</span>{% if not loop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+    {% endif %}
   </header>
-  <div class="post-body">{{ article.content | safe }}</div>
-  <p class="back-link"><a href="{{ base_url }}/posts/" aria-label="Back to Blog">← Back to Blog</a></p>
+
+  <!-- Post Content -->
+  <div class="post-body">
+    {{ article.content | safe }}
+  </div>
+
+  <!-- Back link -->
+  <p class="back-link">
+    <a href="{{ (base_url | default('/')).rstrip('/') }}/index.html" aria-label="Back to Home">← Back to Home</a>
+  </p>
 </article>
+
 {% endblock %}

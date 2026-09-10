@@ -1,9 +1,10 @@
 ---
-Title: Chronic Kidney Disease Prediction using Machine Learning and Deep Learning
+Title: Chronic Kidney Disease Prediction
+Page Title: Chronic Kidney Disease Prediction using Machine Learning and Deep Learning
 Slug: chronic-kidney-disease-pred
 Project Type: University Project
 Duration: Apr 2022 - Jul 2022
-Summary: Performed predictive modeling for Chronic Kidney Disease (CKD) using multiple ML models and CNN on the UCI CKD dataset.
+Summary: Performed predictive modeling for Chronic Kidney Disease using multiple ML models and CNN on the UCI CKD dataset.
 Skills: scikit · TensorFlow · Seaborn · pandas · Python
 Image: chronic-kidney-disease-pred.jpg
 Order: 4

@@ -1,14 +1,41 @@
 {% extends "base.html" %}
 {% block title %}{{ article.title }} · {{ site_title }}{% endblock %}
+
 {% block content %}
+
 <article class="project container">
-  <h1>{{ article.title }}</h1>
-  <div class="project-meta">
-    {% if article.metadata.get('project_type') %}<span class="project-type">{{ article.metadata.get('project_type') }}</span>{% endif %}
-    {% if article.metadata.get('duration') %}<span class="project-duration">{{ article.metadata.get('duration') }}</span>{% endif %}
-  </div>
-  {% if article.metadata.get('skills') %}<p class="project-skills"><em>{{ article.metadata.get('skills') }}</em></p>{% endif %}
-  <div class="project-body">{{ article.content | safe }}</div>
-  <p class="back-link"><a href="{{ base_url }}/projects/">← Back to Projects</a></p>
+    <!-- Project Header -->
+    <div class="project-meta">
+        {% if article.metadata.get('project_type') %}
+        <span class="project-type">{{ article.metadata.get('project_type') }}</span>
+        {% endif %}
+
+        {% if article.metadata.get('duration') %}
+        <span class="project-duration">{{ article.metadata.get('duration') }}</span>
+        {% endif %}
+    </div>
+
+    <!-- Skills -->
+    {% if article.metadata.get('skills') %}
+    <p class="project-skills"><em>{{ article.metadata.get('skills') }}</em></p>
+    {% endif %}
+
+    <!-- Project Description -->
+    <div class="project-body">
+        {{ article.content | safe }}
+    </div>
+
+    <!-- Links -->
+    {% if article.metadata.get('link') %}
+    <p class="project-link">
+        <a href="{{ article.metadata.get('link') }}" target="_blank">View Project →</a>
+    </p>
+    {% endif %}
+
+    <!-- Back link -->
+    <p class="back-link">
+        <a href="{{ base_url or '/index.html' }}">← Back to Home</a>
+    </p>
 </article>
+
 {% endblock %}

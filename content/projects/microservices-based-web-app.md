@@ -1,9 +1,10 @@
 ---
-Title: Ticket House
+Title: Microservices Based E-Commerce Web App
+Page Title: Ticket House
 Slug: microservices-based-web-app
 Project Type: University Project
 Duration: May 2023 - Jun 2023
-Summary: Built a scalable E-Commerce Web Application using a microservices and event-driven architecture.
+Summary: Scalable microservices E-Commerce app with Node.js, TypeScript, React, and Kubernetes; orders managed via Redis and Bull.js.
 Skills: Node.js · JavaScript · React.js · TypeScript · Docker · Kubernetes
 Image: microservices-based-web-app.jpg
 Order: 1
