@@ -10,7 +10,7 @@ authors = [
     { name = "Meher Shrishti Nigam" }
 ]
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 dependencies = [
     "pelican>=4.9,<5",
     "Jinja2>=3.1,<4",

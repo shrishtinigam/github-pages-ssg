@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import subprocess
+import shutil
 import sys
 import tempfile
 import unittest
@@ -10,6 +11,7 @@ import unittest
 class EntrypointTest(unittest.TestCase):
     """Exercise real builds and output protection through both interfaces."""
 
+    @unittest.skipUnless(shutil.which("make"), "Optional Make shortcut is not installed")
     def test_make_and_cli_build_same_site(self):
         """Generate identical HTML/CSS and reject existing unrelated output."""
         root = Path(__file__).resolve().parents[1]
